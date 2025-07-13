@@ -361,7 +361,7 @@ function loadegames() {
 `;
 
   const leftLabel = document.createElement("span");
-  leftLabel.textContent = "E-Game | MASTROWALL";
+  leftLabel.textContent = "E-Games | MASTROWALL";
 
   const closeText = document.createElement("span");
   closeText.textContent = "Close";
