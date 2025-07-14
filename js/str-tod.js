@@ -201,8 +201,9 @@ function rdreslt(e) {
     document.getElementById("preview").style.display = "block";
     var prepostpre = JSON.parse(JSON.parse(reslt[0].TODhtm));
     var inHTML = atob(prepostpre.TODContent);
-    document.getElementById("previewPost").innerHTML =
-      decodeURIComponent(inHTML);
+    document.getElementById("previewPost").innerHTML = decodeURIComponent(
+      unescape(inHTML)
+    );
     document.getElementById("previewPostTime").innerHTML = reslt[0].TimeStamp;
     document.getElementById("previewPostId").innerHTML =
       "ID: " + JSON.parse(reslt[0].TODidd);
