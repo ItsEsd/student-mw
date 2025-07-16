@@ -886,6 +886,7 @@ ul.icons li:last-child {
   background-color: #a1a1a1ea;
   padding: 0px 10px;
   float: right;
+  border-radius: 5px;
 }
 
 #lgoutacnt {
@@ -900,6 +901,8 @@ ul.icons li:last-child {
   text-align: right;
   border-bottom: 4px solid #bdbdbdda;
   margin-bottom: 0px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
 #lgoutacnt:hover {

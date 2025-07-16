@@ -165,10 +165,14 @@ label {
   margin: 10px;
   text-align: center;
   height: 160px;
-  background-color: white;
+  background-color: #fcf5e8;
   border: 1px solid #aaa9a9;
   cursor: pointer;
   font-size: 18px;
+  border-radius: 10px !important;
+}
+.dashitem img {
+  border-radius: 10px !important;
 }
 .dashitem:hover {
   -webkit-transform: scale(1.06);
