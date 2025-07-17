@@ -1271,11 +1271,21 @@ ul.icons li:last-child {
   }
   .dashitem {
     font-size: 16px;
-    height: 155px;
+    height: 160px;
+  }
+  .dashitem span {
+    padding-left: 10px;
+  }
+  .dashitem img {
+    margin-bottom: 5px;
   }
   .dashitem svg {
+    margin-top: 3px;
     width: 20px;
     height: 20px;
+    padding: 4px;
+    background-color: #282828;
+    color: white;
   }
   #fmtitle {
     font-size: 16px;
@@ -1342,17 +1352,14 @@ ul.icons li:last-child {
     height: 160px;
     margin: 6px;
     font-size: 16px;
-    text-align: left;
   }
   .dashitem svg {
     margin: 7px;
     width: 24px;
     height: 24px;
     padding: 4px;
-    float: right;
     background-color: #282828;
     color: white;
-    float: right;
   }
 
   .titlenvlft {

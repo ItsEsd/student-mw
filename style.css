@@ -163,7 +163,7 @@ label {
   display: inline-block;
   width: 250px;
   margin: 10px;
-  text-align: center;
+  text-align: left !important;
   height: 160px;
   background-color: #fcf5e8;
   border: 1px solid #aaa9a9;
@@ -173,7 +173,9 @@ label {
 }
 .dashitem svg {
   border-radius: 2px;
+  float: right;
 }
+
 .dashitem img {
   border-radius: 10px !important;
 }
