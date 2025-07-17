@@ -6,11 +6,13 @@ body {
   min-height: 460px;
   background-color: #414141;
   padding-bottom: 60px;
+  scroll-behavior: smooth;
 }
 html {
   overflow-x: hidden;
   overscroll-behavior-x: none;
   overscroll-behavior-y: none;
+  scroll-behavior: smooth;
 }
 #walllogin {
   overflow-x: hidden;
