@@ -866,12 +866,40 @@ $("#fullscrntod").click(function () {
   $("#edtdstrfulsr").slideDown("fast");
 });
 
+let sketchLoaded = false;
+
 $("#opnsktch").click(function () {
-  window.open(
-    "https://sketch.mastrowall.com",
-    "_blank",
-    "location=center,height=670,width=1600,left=0,top=0,scrollbars=yes,status=yes"
-  );
+  const isMobile = window.innerWidth <= 768;
+
+  if (isMobile) {
+    window.open(
+      "https://sketch.mastrowall.com",
+      "_blank",
+      "width=400,height=700,scrollbars=yes,status=yes"
+    );
+    return;
+  }
+
+  if ($("#sketchContainer").length === 0) {
+    const container = $(`
+      <div id="sketchContainer" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999; background:#fff;">
+        <button id="closeSketch" style="position:absolute; top:0px; right:10px; z-index:10000; padding:3px 10px; background:#f44336; color:white; border:none; border-bottom-right-radius:5px; border-bottom-left-radius:5px; cursor:pointer; font-size:16px; outline:none;">✕</button>
+        <iframe id="sketchFrame" style="width:100%; height:100%; border:none;"></iframe>
+      </div>
+    `);
+    $("body").append(container);
+
+    $(document).on("click", "#closeSketch", function () {
+      $("#sketchContainer").hide();
+    });
+  }
+
+  $("#sketchContainer").show();
+
+  if (!sketchLoaded) {
+    $("#sketchFrame").attr("src", "https://sketch.mastrowall.com");
+    sketchLoaded = true;
+  }
 });
 
 /////////////////Calender////////////////
