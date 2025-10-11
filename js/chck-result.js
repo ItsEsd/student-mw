@@ -3,7 +3,7 @@ chresult.addEventListener("submit", (event) => {
   var enid = JSON.stringify($("#chechenid").val());
   var url1 = "https://script.google.com/macros/s/";
   var url2 =
-    "AKfycbwTJipEONSrXhEI3X0Mg-OkPoR8MR7rPooXOTSfnspXTijEdz9hP0gTVQPISy8cPAFr";
+    "AKfycbyjZr_GlLG5IEBabVp79cQHSwIDovEoZc5KHEBFI2vpI5cb2H14qkqkdPI-quXuIKtn";
   var url = url1 + url2 + "/exec" + "?action=gentestrd";
   document.getElementById("falsebacktwo").style.display = "block";
   var exmprevstr = document.getElementsByClassName("exmiddsh");
@@ -190,7 +190,7 @@ function shoeprevexresult(label) {
   var enrid = JSON.stringify(y[posofinput].value);
   var url1 = "https://script.google.com/macros/s/";
   var url2 =
-    "AKfycbwTJipEONSrXhEI3X0Mg-OkPoR8MR7rPooXOTSfnspXTijEdz9hP0gTVQPISy8cPAFr";
+    "AKfycbyjZr_GlLG5IEBabVp79cQHSwIDovEoZc5KHEBFI2vpI5cb2H14qkqkdPI-quXuIKtn";
   var url = url1 + url2 + "/exec" + "?action=gentestrd";
   document.getElementById("falsebacktwo").style.display = "block";
   $.getJSON(
