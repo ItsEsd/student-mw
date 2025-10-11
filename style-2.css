@@ -180,7 +180,10 @@
 .svshowexres {
   font-size: 14px !important;
 }
-
+.dltsvdexdt {
+  font-size: 14px !important;
+  margin-left: 5px;
+}
 .srctopichead {
   float: left;
   padding-left: 6px;
@@ -703,20 +706,39 @@
   z-index: 10000;
   background-image: linear-gradient(-180deg, #d7d7d7, #020248e6);
 }
-
+.btnassgnst {
+  padding: 10px;
+  padding-bottom: 10px;
+  margin: 0px;
+}
+.btnassgnst button {
+  width: 100%;
+  border-radius: 6px;
+  font-size: 16px;
+}
+.btnassgnst button:disabled {
+  background-color: #2d2d2d;
+  color: white;
+  cursor: not-allowed;
+}
+.btnassgnst button:disabled::after {
+  content: " ✅";
+}
 .srvcconone {
   width: 100%;
   max-width: 550px;
   background-color: #ffffff;
   text-align: left;
-  padding: 10px;
+  padding: 4px;
   box-shadow: 0px 2px 10px 1px #ffffff90;
   margin-top: 40px;
   margin-bottom: 40px;
   border-radius: 10px;
+  font-size: 1.1rem;
 }
 .srvcconone iframe {
-  height: 80vh !important;
+  height: 82vh !important;
+  border-radius: 10px;
 }
 .clssrvccon {
   top: 0px;
@@ -1135,6 +1157,200 @@ ul.icons li:last-child {
   opacity: 0.5;
 }
 
+/* Enrolled Exams */
+.clsenrlexms {
+  cursor: pointer;
+  padding: 4px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(226, 25, 25);
+  color: white;
+  font-size: 20px;
+}
+
+.clsenrlexms:hover {
+  opacity: 0.7;
+}
+
+#enrldExamsContainer {
+  display: none;
+  top: 0px;
+  left: 0px;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    0deg,
+    #809d7df1,
+    #d0d1d0f8,
+    #e6bfab,
+    #dddddd
+  );
+  z-index: 10000;
+  height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+#enrldExamsContainer h3 {
+  background-color: #fae1ab;
+  padding: 15px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  border-bottom: 2px solid #fff;
+  top: 0px;
+  position: sticky !important;
+  z-index: 210000 !important;
+}
+
+#exam-list {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1em;
+  z-index: 100 !important;
+  overflow-y: auto;
+  text-align: left;
+}
+.exam-card {
+  flex: 1 1 450px;
+  background-color: #ffffffb3;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.142);
+  padding: 15px;
+  border: 2px solid rgba(158, 7, 7, 0.7);
+  transition: 0.3s ease;
+  z-index: 10;
+}
+.exam-card:hover {
+  transform: scale(1.02);
+  border: 2.5px solid rgba(158, 7, 7, 0.7);
+}
+#enrldExamsContainer .exam-card h3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0;
+  padding: 10px !important;
+  overflow: hidden;
+  border-radius: 10px;
+  line-height: 1.5;
+  height: auto;
+  background-color: #fff;
+  border-bottom: 2px solid #898989;
+}
+.exam-card h3 span {
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+.exam-card h3 .title-text {
+  display: inline-block;
+  font-size: 1.2rem;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: normal;
+  word-break: break-word;
+  z-index: 0 !important;
+}
+.exam-card p {
+  line-height: 1;
+}
+.enrlexmbtngrp {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.go-btn {
+  background: #b90202c8;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
+}
+.chekex-btn {
+  background: #019c0cb6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 80%;
+}
+.chekpr-btn {
+  background: #9c6101bb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 80%;
+}
+.addtobrd {
+  background: #0401c3b6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 10%;
+  min-width: 60px;
+  cursor: not-allowed !important;
+}
+.enrlexmbtngrp button {
+  font-size: 16px;
+  padding: 10px 5px;
+}
+.enrlexmbtngrp button:hover {
+  background: #727272c8;
+}
+.enrlexmbtngrp button:disabled {
+  background: #adb0cb;
+  cursor: not-allowed;
+}
+.testinfo {
+  margin-top: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.testinfo a {
+  font-size: 20px;
+  font-weight: 600;
+  padding: 10px 15px;
+  background-color: #806b00;
+  color: #f2eccd;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0px 2px 15px 0px #be8686;
+}
+.testinfo a:hover {
+  text-decoration: none;
+  color: #806b00;
+  padding: 15px 20px;
+  background-color: #f2eccd;
+  transition: all 0.3s ease;
+}
+.nenrlexm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.nenrlexm svg {
+  width: 200px;
+  height: 200px;
+  display: block;
+}
 /* Media Screen */ /* Mobile */
 
 @media (max-width: 1024px) {

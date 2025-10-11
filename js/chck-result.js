@@ -3,7 +3,7 @@ chresult.addEventListener("submit", (event) => {
   var enid = JSON.stringify($("#chechenid").val());
   var url1 = "https://script.google.com/macros/s/";
   var url2 =
-    "AKfycbyjZr_GlLG5IEBabVp79cQHSwIDovEoZc5KHEBFI2vpI5cb2H14qkqkdPI-quXuIKtn";
+    "AKfycbwTJipEONSrXhEI3X0Mg-OkPoR8MR7rPooXOTSfnspXTijEdz9hP0gTVQPISy8cPAFr";
   var url = url1 + url2 + "/exec" + "?action=gentestrd";
   document.getElementById("falsebacktwo").style.display = "block";
   var exmprevstr = document.getElementsByClassName("exmiddsh");
@@ -79,7 +79,7 @@ chresult.addEventListener("submit", (event) => {
           }
         }
       }
-
+      $("#experformance").slideDown("fast");
       document.getElementById("falsebacktwo").style.display = "none";
     }
   );
@@ -129,7 +129,7 @@ function readsaveexm() {
   var ur2 =
     "AKfycbwUXXLNfbjlRQxPPe2sT2MIqZUyLnVO26YSa9GM9DDiQGQiqtsoDRLz5NMkyYso1xkKFA";
   var ur3 =
-    "AKfycbyjZr_GlLG5IEBabVp79cQHSwIDovEoZc5KHEBFI2vpI5cb2H14qkqkdPI-quXuIKtn";
+    "AKfycbwTJipEONSrXhEI3X0Mg-OkPoR8MR7rPooXOTSfnspXTijEdz9hP0gTVQPISy8cPAFr";
   var url = ur1 + ur2 + "/exec" + "?action=read";
   var email1 = $("#email").val();
   var pass = $("#pcodeStu").val();
@@ -155,10 +155,10 @@ function readsaveexm() {
                 '<div align="left" class="savevexmdiv"><div style="text-align:left"><span style="float:left">No. ' +
                 srno +
                 "</span>" +
-                '<span style="float:right;"><button class="btn btn-primary svshowexres" onclick="shoeprevexresult(this);">Show Result</button></span></div><br>' +
-                '<p style="font-size:14px;"><span style="float:left;" class="exmiddsh">Exam ID: ' +
+                '<span style="float:right;"><button class="btn btn-primary svshowexres" onclick="shoeprevexresult(this);">Show Result</button><button class="btn btn-danger dltsvdexdt" onclick="deletelistrslt(this);">Delete</button></span></div><br>' +
+                '<p style="font-size:14px;"><span style="float:left;" class="exmiddsh">Exam ID: <span class="emxidsvdbrd">' +
                 singlessvexm[st] +
-                '</span><br><span style="float:left;">Enrollment ID: ' +
+                '</span></span><br><span style="float:left;">Enrollment ID: ' +
                 singlessvexm[st + 1] +
                 '</span></p><div class="exdtlsst">' +
                 singlessvexm[st + 2] +
@@ -190,7 +190,7 @@ function shoeprevexresult(label) {
   var enrid = JSON.stringify(y[posofinput].value);
   var url1 = "https://script.google.com/macros/s/";
   var url2 =
-    "AKfycbyjZr_GlLG5IEBabVp79cQHSwIDovEoZc5KHEBFI2vpI5cb2H14qkqkdPI-quXuIKtn";
+    "AKfycbwTJipEONSrXhEI3X0Mg-OkPoR8MR7rPooXOTSfnspXTijEdz9hP0gTVQPISy8cPAFr";
   var url = url1 + url2 + "/exec" + "?action=gentestrd";
   document.getElementById("falsebacktwo").style.display = "block";
   $.getJSON(
@@ -256,4 +256,48 @@ function shoeprevexresult(label) {
       document.getElementById("falsebacktwo").style.display = "none";
     }
   );
+}
+
+function deletelistrslt(label) {
+  if (!confirm("Are you sure you want to delete this saved exam? ")) {
+    return;
+  }
+  var list = document.getElementsByClassName("dltsvdexdt");
+  list = [].slice.call(list);
+  var posofinput = list.indexOf(label);
+
+  var x = document.getElementsByClassName("emxidsvdbrd");
+  var examid = x[posofinput].textContent;
+
+  document.getElementById("falsebacktwo").style.display = "block";
+  var eid = $("#email").val();
+  const srpturl =
+    "https://script.google.com/macros/s/AKfycbzn36BI7hLV1wYljOfGQQyHxmPbQ2KY7aI7vP2hBHH6Vz3yd4pIIajk9_GMgk5ZD_yF/exec";
+  const url = `${srpturl}?action=delsvexm&eid=${eid}&emid=${examid}&callback=ctrlqsvdexms`;
+
+  console.log("Fetching:", url);
+
+  jQuery.ajax({
+    crossDomain: true,
+    url:
+      "https://api.amrit-corp.com/_header/gate/mastrowall/?target_url=" +
+      encodeURIComponent(url),
+    method: "GET",
+    dataType: "jsonp",
+  });
+}
+
+function ctrlqsvdexms(e) {
+  console.log(e.result);
+  readsaveexm();
+  $("#extakepost").empty();
+  $("#extakepost")
+    .html(` <svg xmlns="http://www.w3.org/2000/svg" style="color:#8a8a8b;" width="60" height="60" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                  <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+               </svg>
+               <br> <br>
+               <p>Loading saved exams...</p>`);
+
+  document.getElementById("falsebacktwo").style.display = "none";
 }

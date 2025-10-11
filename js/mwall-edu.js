@@ -487,13 +487,13 @@ function showeduin(label) {
                 $("#crtelem").empty();
                 $("#crtelem").slideDown();
                 document.getElementById("crtelem").innerHTML =
-                  '<center><span class="clssrvccon" onclick="document.getElementById(`crtelem`).style.display=`none`;">X</span></center>';
+                  '<center><span class="clssrvccon" onclick="document.getElementById(`crtelem`).style.display=`none`;">&times;</span></center>';
                 var srno = 1;
                 for (var k = 0; k < alltds.length - 1; k += 3) {
                   var elemtds = document.createElement("div");
                   elemtds.innerHTML +=
                     '<center><div class="srvcconone">' +
-                    '<div><p style="text-align:right;color:#555;border-bottom:1px solid #555;padding-bottom:4px;"><b>TOD No. ' +
+                    '<div style="padding:8px;"><p style="text-align:right;color:#555;border-bottom:1px solid #555;padding-bottom:4px;"><b>TOD No. ' +
                     srno +
                     '</b></p><div><p><span><i>Remarks: </i></span><span class="edtdcmnt">' +
                     JSON.parse(alltds[k + 2]) +
@@ -524,13 +524,25 @@ function showeduin(label) {
                 $("#crtelem").empty();
                 $("#crtelem").slideDown();
                 document.getElementById("crtelem").innerHTML =
-                  '<center><span class="clssrvccon" onclick="document.getElementById(`crtelem`).style.display=`none`;">X</span></center>';
+                  '<center><span class="clssrvccon" onclick="document.getElementById(`crtelem`).style.display=`none`;">&times;</span></center>';
                 var srno = 1;
                 for (var k = 0; k < allotexm.length - 1; k += 3) {
+                  var examId = allotexm[k];
+                  var examPass = allotexm[k + 1];
                   var elemtds = document.createElement("div");
+
+                  var isEnrolled = false;
+                  document
+                    .querySelectorAll(".exam-card .enrldexmid")
+                    .forEach((input) => {
+                      if (input.value === examId) {
+                        isEnrolled = true;
+                      }
+                    });
+
                   elemtds.innerHTML +=
                     '<center><div class="srvcconone">' +
-                    '<div><p style="text-align:right;color:#555;border-bottom:1px solid #555;padding-bottom:4px;"><b>Exam No. ' +
+                    '<div style="padding:8px;"><p style="text-align:right;color:#555;border-bottom:1px solid #555;padding-bottom:4px;"><b>Exam No. ' +
                     srno +
                     "</b></p><div><p>" +
                     allotexm[k + 2] +
@@ -538,7 +550,13 @@ function showeduin(label) {
                     allotexm[k] +
                     " Pass: " +
                     allotexm[k + 1] +
-                    "</p></font></div></div>" +
+                    "</p></font></div></div><p class='btnassgnst'><button class='btn btn-warning' onclick='enrollassignst(`" +
+                    allotexm[k] +
+                    "`,`" +
+                    allotexm[k + 1] +
+                    "`,this)'" +
+                    (isEnrolled ? "disabled" : "") +
+                    ">Enroll / Assign</button></p>" +
                     "</div><center>";
                   srno = srno + 1;
                   $("#crtelem").append(elemtds);
@@ -556,10 +574,10 @@ function showeduin(label) {
               $("#crtelem").empty();
               $("#crtelem").slideDown();
               document.getElementById("crtelem").innerHTML =
-                '<center><span class="clssrvccon" onclick="document.getElementById(`crtelem`).style.display=`none`;">X</span></center>';
+                '<center><span class="clssrvccon" onclick="document.getElementById(`crtelem`).style.display=`none`;">&times;</span></center>';
               var elemtds = document.createElement("div");
               elemtds.innerHTML =
-                '<center><div class="srvcconone"><iframe frameborder="0" style="width:100%;height:100%;min-height:500px;overflow-y:auto;background:#555;" src="' +
+                '<center><div class="srvcconone"><iframe frameborder="0" style="width:100%;height:100%;overflow-y:auto;background:#555;" src="' +
                 newlk +
                 '"></iframe></div></center>';
               $("#crtelem").append(elemtds);
@@ -1053,3 +1071,275 @@ $("#sdmntwo").click(function () {
 $("#clscal").click(function () {
   $("#calcontain").slideUp();
 });
+
+function genenrollid() {
+  var k =
+    Math.random().toString(26).substring(2, 7) +
+    Math.random().toString(26).substring(2, 7);
+  document.getElementById("enrollid").value = k;
+}
+
+function enrollassignst(examid, epass, btn) {
+  // btn is the button element that was clicked
+  if (!btn) return;
+
+  // Confirm dialog
+  const confirmEnroll = confirm(
+    "Are you sure you want to enroll/assign this exam?"
+  );
+  if (!confirmEnroll) return; // Stop if user cancels
+
+  // Disable the button immediately
+  btn.disabled = true;
+  btn.textContent = "Enrolling...";
+  btn.classList.add("btn-enrolling");
+
+  // Collect student info
+  var stuid = encodeURIComponent($("#stuid").val());
+  var namestu = encodeURIComponent(
+    JSON.stringify(document.getElementById("avtrbrdname").textContent)
+  );
+  var eid = encodeURIComponent(JSON.stringify($("#email").val()));
+  var enid = encodeURIComponent(
+    JSON.stringify(
+      Math.random().toString(26).substring(2, 7) +
+        Math.random().toString(26).substring(2, 7)
+    )
+  );
+
+  // Build URL
+  var url1 = "https://script.google.com/macros/s/";
+  var url2 =
+    "AKfycbwTJipEONSrXhEI3X0Mg-OkPoR8MR7rPooXOTSfnspXTijEdz9hP0gTVQPISy8cPAFr";
+  var url =
+    url1 +
+    url2 +
+    "/exec" +
+    "?callback=ctrlq&exid=" +
+    examid +
+    "&expass=" +
+    JSON.stringify(epass) +
+    "&stuname=" +
+    namestu +
+    "&stueid=" +
+    eid +
+    "&enrollid=" +
+    enid +
+    "&stuid=" +
+    stuid +
+    "&action=gentestenroll";
+
+  // AJAX request
+  $.ajax({
+    crossDomain: true,
+    url:
+      "https://api.amrit-corp.com/_header/gate/mastrowall/?target_url=" +
+      encodeURIComponent(url),
+    method: "GET",
+    dataType: "jsonp",
+    jsonp: "callback",
+  });
+}
+
+// Simple JS notification function
+function showNotification(message, type) {
+  const notif = document.createElement("div");
+  notif.textContent = message;
+  notif.style.position = "fixed";
+  notif.style.top = "20px";
+  notif.style.right = "20px";
+  notif.style.padding = "12px 20px";
+  notif.style.backgroundColor = type === "success" ? "#4caf50" : "#f44336";
+  notif.style.color = "#fff";
+  notif.style.borderRadius = "0px";
+  notif.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
+  notif.style.zIndex = 100000;
+  notif.style.fontFamily = "sans-serif";
+  notif.style.fontSize = "16px";
+  notif.style.opacity = 0;
+  notif.style.transition = "opacity 0.3s ease";
+
+  document.body.appendChild(notif);
+
+  // Fade in
+  setTimeout(() => (notif.style.opacity = 1), 10);
+  // Auto remove after 3 seconds
+  setTimeout(() => {
+    notif.style.opacity = 0;
+    setTimeout(() => notif.remove(), 300);
+  }, 3000);
+}
+
+function ctrlq(e) {
+  console.log(e.result);
+  const btn = document.querySelector(".btn-enrolling");
+  if (e.result === "Value updated successfully!") {
+    getenrolledexm();
+    showNotification("Enrollment successful!", "success");
+    if (btn) btn.textContent = "Enroll/ Assign";
+  } else {
+    showNotification("Enrollment failed. Try again.", "error");
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = "Enroll / Assign";
+    }
+  }
+}
+
+function getenrolledexm() {
+  const scriptUrl =
+    "https://script.google.com/macros/s/AKfycbzn36BI7hLV1wYljOfGQQyHxmPbQ2KY7aI7vP2hBHH6Vz3yd4pIIajk9_GMgk5ZD_yF/exec";
+  const email = $("#email").val().trim();
+
+  if (!email) {
+    alert("Please enter your email first.");
+    return;
+  }
+
+  const url = `${scriptUrl}?action=getenrolled&email=${encodeURIComponent(
+    email
+  )}&callback=ctrlqenrldt`;
+
+  jQuery.ajax({
+    crossDomain: true,
+    url:
+      "https://api.amrit-corp.com/_header/gate/mastrowall/?target_url=" +
+      encodeURIComponent(url),
+    method: "GET",
+    dataType: "jsonp",
+  });
+}
+let exams = [];
+function ctrlqenrldt(e) {
+  if (e.status === "success" && e.enrolled_exams) {
+    try {
+      exams = JSON.parse(e.enrolled_exams);
+    } catch (err) {
+      console.error("Invalid JSON format:", err);
+      return;
+    }
+
+    showEnrolledExams(exams);
+  } else {
+    document.getElementById(
+      "exam-list"
+    ).innerHTML = `<p class='nenrlexm'><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 -960 960 960"  fill="#76767674"><path d="m388-212-56-56 92-92-92-92 56-56 92 92 92-92 56 56-92 92 92 92-56 56-92-92-92 92ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Z"/></svg>No enrolled exams found.</p>`;
+    document.querySelectorAll(".ttlenrexms").forEach((el) => {
+      el.textContent = "(0)";
+    });
+  }
+}
+
+function showEnrolledExams(data) {
+  const container = document.getElementById("exam-list");
+  container.innerHTML = "";
+
+  if (!data || data.length === 0) {
+    container.innerHTML = "<p>No enrolled exams found.</p>";
+    document.querySelectorAll(".ttlenrexms").forEach((el) => {
+      el.textContent = "(0)";
+    });
+    return;
+  }
+
+  function trimText(text) {
+    const maxLen = window.innerWidth < 768 ? 35 : 70;
+    return text.length > maxLen ? text.substring(0, maxLen) + "..." : text;
+  }
+  document.querySelectorAll(".ttlenrexms").forEach((el) => {
+    el.textContent = "(" + data.length + ")";
+  });
+  data.forEach((exam) => {
+    let enrollId = exam.f;
+    try {
+      enrollId = JSON.parse(exam.f);
+    } catch (err) {
+      enrollId = exam.f.replace(/['"]+/g, "");
+    }
+    var isListed = false;
+    document.querySelectorAll(".savevexmdiv .emxidsvdbrd").forEach((el) => {
+      if (el.textContent.trim() === exam.a) {
+        isListed = true;
+      }
+    });
+    const card = document.createElement("div");
+    card.className = "exam-card";
+
+    card.innerHTML = `
+      <h3>
+        <span class="title-text" data-full="${exam.b}">${trimText(
+      exam.b
+    )}</span>
+        <span>${exam.s === "NA" ? "Not Completed ⛔" : "Completed ✅"}</span>
+      </h3><input type="hidden" readonly class="enrldexmid" value="${exam.a}">
+      <p><b>Description:</b> ${exam.c}</p>
+      <p><b>Duration:</b> ${exam.d}</p>
+      <p><b>Instructor:</b> ${exam.e}</p>
+      <p><b>Enrolled ID:</b> ${enrollId}</p>
+      <p><b>Exam Pass:</b> ${JSON.parse(exam.p)}</p>
+      <p><b>Enrolled on:</b> ${new Date(exam.g).toLocaleString()}</p>
+
+      <div class="enrlexmbtngrp">
+        <button class="go-btn" 
+          onclick="goToTest('${exam.a}', '${enrollId}', '${JSON.parse(
+      exam.p
+    )}')" 
+          ${exam.s !== "NA" ? "disabled" : ""}>
+          Go to Test
+        </button>
+
+        <button class="chekex-btn" 
+         onclick="checkresltst('${exam.a}', '${enrollId}')" 
+          ${exam.s === "NA" ? "disabled" : ""}>
+          Check Result
+        </button>
+
+    
+
+        <button class="addtobrd" 
+          ${isListed || exam.s === "NA" ? "disabled" : ""}>
+          <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#e3e3e3"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg> 
+        </button>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+//  <button class="chekpr-btn"
+//          onclick="checkperformnc('${exam.a}', '${JSON.parse(exam.p)}')"
+//           ${exam.s === "NA" ? "disabled" : ""}>
+//           Performance
+//         </button>
+
+// Resize handler
+window.addEventListener("resize", () => {
+  document.querySelectorAll(".title-text").forEach((el) => {
+    const fullText = el.dataset.full || el.textContent;
+    const maxLen = window.innerWidth < 768 ? 35 : 70;
+    el.textContent =
+      fullText.length > maxLen
+        ? fullText.substring(0, maxLen) + "..."
+        : fullText;
+  });
+});
+
+// Handle "Go to Test" button click
+function goToTest(examId, enrollId, pass) {
+  alert(`Opening test for Exam ID: ${examId} | Enroll ID: ${enrollId}`);
+  // Example redirect:
+  window.open(
+    `https://mastrowall.com/online-test/?id=${btoa(examId)}&enroll=${btoa(
+      enrollId
+    )}&pass=${btoa(pass)}&valid=true`,
+    "_blank"
+  );
+}
+
+function checkresltst(exmid, enrid) {
+  $(".exmenrlddv").hide();
+  document.getElementById("checkexamid").value = exmid;
+  document.getElementById("chechenid").value = enrid;
+  $(".experformsubmit").click();
+}

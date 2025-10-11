@@ -437,19 +437,27 @@ h3 {
   margin: 4px;
   padding: 4px 20px;
 }
+
 #examportalbtn {
   width: 100%;
   bottom: 0px;
   right: 0px;
   position: fixed;
   border-radius: 0px;
-  background-color: #46b346;
-  font-size: 16px;
+  background-color: #6b6b6bb6;
+  font-size: 18px;
+  display: flex;
+  border: 0px;
+  align-items: center;
+  justify-content: space-around;
+  border-top: 2px solid #ffffffd4;
 }
 #examportalbtn svg {
   margin-top: -4px;
 }
-
+#examportalbtn span:hover {
+  opacity: 0.7;
+}
 .expsec {
   max-width: 100%;
   display: inline-block;
@@ -1081,7 +1089,7 @@ h3 {
   font-size: 16px;
   color: white;
   text-decoration: none;
-  background-color: #0c09c9;
+  background-color: #5250d4;
 }
 #showedulink a:hover {
   background-color: #ffffffde;

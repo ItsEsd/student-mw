@@ -3,6 +3,7 @@ function inwallStu() {
   eduwaiting();
   eduapprv();
   readsaveexm();
+  getenrolledexm();
   var ur1 = "https://script.google.com/macros/s/";
   var ur2 =
     "AKfycbx9SDHRafWW8KCUD0xtHflnzFKkaWIi_OteyK0hKzBay7Bxy9YvvpCzkL43lFOnv85zYg";

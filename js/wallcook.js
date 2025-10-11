@@ -55,10 +55,13 @@ function deleteAllCookies() {
   }, 2000);
 }
 function signagn() {
+  let stateObj = { id: "0" };
+  window.history.replaceState(stateObj, "", "/");
+  document.title = "Student | MASTROWALL";
   deleteAllCookies();
   setTimeout(function () {
-    window.open("../", "_self");
-  }, 1000);
+    location.reload();
+  }, 2000);
 }
 $(document).ready(function () {
   var mn = "https://mastrowall.com/";
