@@ -201,7 +201,7 @@ function addeducator(label) {
       dataType: "jsonp",
     });
   } else {
-    list[posofinput].style.backgroundColor = "#e74141";
+    list[posofinput].style.backgroundColor = "#e74141 !important";
     list[posofinput].innerHTML = "In Classroom/ Waiting";
     document.getElementById("preedusrc").style.pointerEvents = "auto";
   }
