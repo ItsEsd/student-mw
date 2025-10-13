@@ -801,9 +801,9 @@ h3 {
 }
 
 .rmvstbtn {
-  background-color: #8b8311;
-  color: white;
-  font-size: 16px;
+  background-color: #8b8311 !important;
+  color: white !important;
+  font-size: 16px !important;
   border: 0px;
   padding: 6px 14px;
   float: right;

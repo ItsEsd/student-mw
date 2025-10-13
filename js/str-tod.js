@@ -138,7 +138,6 @@ function storedtods() {
 function getalltds(e) {
   if (e.records != "ID not found!") {
     const allsttod = e.records[0].AllTOD;
-    console.log(allsttod);
     var singlesttod = allsttod.split("{td},");
     var lenstr = singlesttod.length;
     var st = 0;
