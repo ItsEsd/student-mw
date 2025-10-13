@@ -6,45 +6,51 @@ function eduwaiting() {
     "none";
   document.getElementById("myeduc-wait").style.backgroundImage =
     "url('images/frameloader.gif')";
+  var email1 = $("#email").val();
+  var pass = $("#pcodeStu").val();
   var ur1 = "https://script.google.com/macros/s/";
   var ur2 =
     "AKfycbwUXXLNfbjlRQxPPe2sT2MIqZUyLnVO26YSa9GM9DDiQGQiqtsoDRLz5NMkyYso1xkKFA";
-  var email1 = $("#email").val();
-  var pass = $("#pcodeStu").val();
-  var url = ur1 + ur2 + "/exec" + "?action=read";
-  $.getJSON(
-    "https://api.amrit-corp.com/_header/gate/mastrowall/?target_url=" +
+  var url =
+    ur1 +
+    ur2 +
+    "/exec?action=ftchst&callback=alledwait" +
+    "&edmail=" +
+    email1 +
+    "&edps=" +
+    pass;
+
+  jQuery.ajax({
+    crossDomain: true,
+    url:
+      "https://api.amrit-corp.com/_header/gate/mastrowall/?target_url=" +
       encodeURIComponent(url),
-    function (json) {
-      for (var i = 0; i < json.records.length - 1; i++) {
-        if (
-          email1 == json.records[i].Email &&
-          pass == json.records[i].Passcode
-        ) {
-          if (json.records[i].EduWait != 0) {
-            document.getElementById("assignededu").style.display = "none";
-            document.getElementById("meducatordiv").style.display = "block";
-            var allst = json.records[i].EduWait;
-            var singlest = allst.split(",");
-            var lenstr = singlest.length;
-            var st = 0;
-            for (st; st < lenstr; st++) {
-              var edidsrc = singlest[st];
-              srcedidwait(edidsrc);
-            }
-          } else {
-            document.getElementById("myeduc-wait").innerHTML =
-              '<div class="nocontentalled"><svg xmlns="http://www.w3.org/2000/svg" style="color:#8a8a8b;" width="60" height="60" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">' +
-              '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />' +
-              '<path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" /></svg>' +
-              '<br><h5 style="color:#474749;">Empty</h5></div>';
-            document.getElementById("myeduc-wait").style.backgroundImage =
-              "none";
-          }
-        }
-      }
+    method: "GET",
+    dataType: "jsonp",
+  });
+}
+
+function alledwait(e) {
+  if (e.records[0].EduWait != 0) {
+    document.getElementById("assignededu").style.display = "none";
+    document.getElementById("meducatordiv").style.display = "block";
+    var allst = e.records[0].EduWait;
+    var singlest = allst.split(",");
+    console.log(allst);
+    var lenstr = singlest.length;
+    var st = 0;
+    for (st; st < lenstr; st++) {
+      var edidsrc = singlest[st];
+      srcedidwait(edidsrc);
     }
-  );
+  } else {
+    document.getElementById("myeduc-wait").innerHTML =
+      '<div class="nocontentalled"><svg xmlns="http://www.w3.org/2000/svg" style="color:#8a8a8b;" width="60" height="60" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">' +
+      '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />' +
+      '<path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" /></svg>' +
+      '<br><h5 style="color:#474749;">Empty</h5></div>';
+    document.getElementById("myeduc-wait").style.backgroundImage = "none";
+  }
 }
 
 function srcedidwait(edidsrc) {
@@ -152,45 +158,52 @@ function eduapprv() {
   $("#myeduc-appr").empty();
   document.getElementById("myeduc-appr").style.backgroundImage =
     "url('images/frameloader.gif')";
+
+  var email1 = $("#email").val();
+  var pass = $("#pcodeStu").val();
+
   var ur1 = "https://script.google.com/macros/s/";
   var ur2 =
     "AKfycbwUXXLNfbjlRQxPPe2sT2MIqZUyLnVO26YSa9GM9DDiQGQiqtsoDRLz5NMkyYso1xkKFA";
-  var email1 = $("#email").val();
-  var pass = $("#pcodeStu").val();
-  var url = ur1 + ur2 + "/exec" + "?action=read";
-  $.getJSON(
-    "https://api.amrit-corp.com/_header/gate/mastrowall/?target_url=" +
+  var url =
+    ur1 +
+    ur2 +
+    "/exec?action=ftchst&callback=gtedapprdlst" +
+    "&edmail=" +
+    email1 +
+    "&edps=" +
+    pass;
+
+  jQuery.ajax({
+    crossDomain: true,
+    url:
+      "https://api.amrit-corp.com/_header/gate/mastrowall/?target_url=" +
       encodeURIComponent(url),
-    function (json) {
-      for (var i = 0; i < json.records.length - 1; i++) {
-        if (
-          email1 == json.records[i].Email &&
-          pass == json.records[i].Passcode
-        ) {
-          if (json.records[i].EduAppr != 0) {
-            document.getElementById("assignededu").style.display = "none";
-            document.getElementById("meducatordiv").style.display = "block";
-            var allstap = json.records[i].EduAppr;
-            var singlestap = allstap.split(",");
-            var lenstrap = singlestap.length;
-            var str = 0;
-            for (str; str < lenstrap; str++) {
-              var edidsrcap = singlestap[str];
-              srcedidapprv(edidsrcap);
-            }
-          } else {
-            document.getElementById("myeduc-appr").innerHTML =
-              '<div class="nocontentalled"><svg xmlns="http://www.w3.org/2000/svg" style="color:#8a8a8b;" width="60" height="60" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">' +
-              '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />' +
-              '<path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" /></svg>' +
-              '<br><h5 style="color:#474749;">Empty</h5></div>';
-            document.getElementById("myeduc-appr").style.backgroundImage =
-              "none";
-          }
-        }
-      }
+    method: "GET",
+    dataType: "jsonp",
+  });
+}
+
+function gtedapprdlst(e) {
+  if (e.records[0].EduAppr != 0) {
+    document.getElementById("assignededu").style.display = "none";
+    document.getElementById("meducatordiv").style.display = "block";
+    var allstap = e.records[0].EduAppr;
+    var singlestap = allstap.split(",");
+    var lenstrap = singlestap.length;
+    var str = 0;
+    for (str; str < lenstrap; str++) {
+      var edidsrcap = singlestap[str];
+      srcedidapprv(edidsrcap);
     }
-  );
+  } else {
+    document.getElementById("myeduc-appr").innerHTML =
+      '<div class="nocontentalled"><svg xmlns="http://www.w3.org/2000/svg" style="color:#8a8a8b;" width="60" height="60" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">' +
+      '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />' +
+      '<path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" /></svg>' +
+      '<br><h5 style="color:#474749;">Empty</h5></div>';
+    document.getElementById("myeduc-appr").style.backgroundImage = "none";
+  }
 }
 
 function srcedidapprv(edidsrcap) {

@@ -110,61 +110,68 @@ function ctrlqsttd(e) {
 }
 
 function storedtods() {
+  var email1 = $("#email").val();
+  var pass = $("#pcodeStu").val();
+
   var ur1 = "https://script.google.com/macros/s/";
   var ur2 =
     "AKfycbwUXXLNfbjlRQxPPe2sT2MIqZUyLnVO26YSa9GM9DDiQGQiqtsoDRLz5NMkyYso1xkKFA";
-  var url = ur1 + ur2 + "/exec" + "?action=read";
-  var email1 = $("#email").val();
-  var pass = $("#pcodeStu").val();
-  $.getJSON(
-    "https://api.amrit-corp.com/_header/gate/mastrowall/?target_url=" +
+  var url =
+    ur1 +
+    ur2 +
+    "/exec?action=ftchst&callback=getalltds" +
+    "&edmail=" +
+    email1 +
+    "&edps=" +
+    pass;
+
+  jQuery.ajax({
+    crossDomain: true,
+    url:
+      "https://api.amrit-corp.com/_header/gate/mastrowall/?target_url=" +
       encodeURIComponent(url),
-    function (json) {
-      for (var i = 0; i < json.records.length - 1; i++) {
-        if (
-          email1 == json.records[i].Email &&
-          pass == json.records[i].Passcode
-        ) {
-          if (json.records[i].AllTOD != 0) {
-            $("#storetodpost").empty();
-            var allsttod = json.records[i].AllTOD;
-            var singlesttod = allsttod.split("{td},");
-            var lenstr = singlesttod.length;
-            var st = 0;
-            var srno = 1;
-            for (st; st < lenstr - 1; st += 3) {
-              document.getElementById("storetodpost").innerHTML +=
-                '<div class="storedtd"><div class="sharebiton" title="Copy Link" onclick="crcpbitlink(this)"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16"> <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/> <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/></svg></div><p>TOD No. ' +
-                srno +
-                '</p><p><span class="todcommnt">' +
-                JSON.parse(singlesttod[st + 2]) +
-                '</span><br><span class="todidstyl">ID: ' +
-                JSON.parse(singlesttod[st]) +
-                " Key: " +
-                JSON.parse(singlesttod[st + 1]) +
-                "</span></p>" +
-                '<div align="right"><button class="btn btn-warning showsttod" onclick="showtopictod(this);">View</button>' +
-                '<button class="btn btn-dark delsttod" onclick="deltopictod(this);">Delete</button>' +
-                '<input class="tdcid" style="display: none;" value="' +
-                JSON.parse(singlesttod[st]) +
-                '"/><input class="tdkeyid" style="display:none;" value="' +
-                JSON.parse(singlesttod[st + 1]) +
-                '"/></div></div>' +
-                "<hr>";
-              srno = srno + 1;
-            }
-          } else {
-            document.getElementById(
-              "storetodpost"
-            ).innerHTML = `<div style="padding:20px;padding-top:30px;"> <svg xmlns="http://www.w3.org/2000/svg" style="color:#8a8a8b;" width="60" height="60" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+    method: "GET",
+    dataType: "jsonp",
+  });
+}
+
+function getalltds(e) {
+  if (e.records != "ID not found!") {
+    const allsttod = e.records[0].AllTOD;
+    console.log(allsttod);
+    var singlesttod = allsttod.split("{td},");
+    var lenstr = singlesttod.length;
+    var st = 0;
+    var srno = 1;
+    for (st; st < lenstr - 1; st += 3) {
+      document.getElementById("storetodpost").innerHTML +=
+        '<div class="storedtd"><div class="sharebiton" title="Copy Link" onclick="crcpbitlink(this)"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16"> <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/> <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/></svg></div><p>TOD No. ' +
+        srno +
+        '</p><p><span class="todcommnt">' +
+        JSON.parse(singlesttod[st + 2]) +
+        '</span><br><span class="todidstyl">ID: ' +
+        JSON.parse(singlesttod[st]) +
+        " Key: " +
+        JSON.parse(singlesttod[st + 1]) +
+        "</span></p>" +
+        '<div align="right"><button class="btn btn-warning showsttod" onclick="showtopictod(this);">View</button>' +
+        '<button class="btn btn-dark delsttod" onclick="deltopictod(this);">Delete</button>' +
+        '<input class="tdcid" style="display: none;" value="' +
+        JSON.parse(singlesttod[st]) +
+        '"/><input class="tdkeyid" style="display:none;" value="' +
+        JSON.parse(singlesttod[st + 1]) +
+        '"/></div></div>' +
+        "<hr>";
+      srno = srno + 1;
+    }
+  } else {
+    document.getElementById(
+      "storetodpost"
+    ).innerHTML = `<div style="padding:20px;padding-top:30px;"> <svg xmlns="http://www.w3.org/2000/svg" style="color:#8a8a8b;" width="60" height="60" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
   <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" /></svg> 
   <br> <br><p>No stored TOD</p></div>`;
-          }
-        }
-      }
-    }
-  );
+  }
 }
 
 function showtopictod(label) {

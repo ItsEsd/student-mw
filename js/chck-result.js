@@ -125,56 +125,69 @@ function ctrlqsvex() {
 }
 
 function readsaveexm() {
-  var ur1 = "https://script.google.com/macros/s/";
-  var ur2 =
-    "AKfycbwUXXLNfbjlRQxPPe2sT2MIqZUyLnVO26YSa9GM9DDiQGQiqtsoDRLz5NMkyYso1xkKFA";
-  var ur3 =
-    "AKfycbwTJipEONSrXhEI3X0Mg-OkPoR8MR7rPooXOTSfnspXTijEdz9hP0gTVQPISy8cPAFr";
-  var url = ur1 + ur2 + "/exec" + "?action=read";
   var email1 = $("#email").val();
   var pass = $("#pcodeStu").val();
 
-  $.getJSON(
-    "https://api.amrit-corp.com/_header/gate/mastrowall/?target_url=" +
+  var ur1 = "https://script.google.com/macros/s/";
+  var ur2 =
+    "AKfycbwUXXLNfbjlRQxPPe2sT2MIqZUyLnVO26YSa9GM9DDiQGQiqtsoDRLz5NMkyYso1xkKFA";
+  var url =
+    ur1 +
+    ur2 +
+    "/exec?action=ftchst&callback=gtallemxms" +
+    "&edmail=" +
+    email1 +
+    "&edps=" +
+    pass;
+
+  jQuery.ajax({
+    crossDomain: true,
+    url:
+      "https://api.amrit-corp.com/_header/gate/mastrowall/?target_url=" +
       encodeURIComponent(url),
-    function (json) {
-      for (var i = 0; i < json.records.length - 1; i++) {
-        if (
-          email1 == json.records[i].Email &&
-          pass == json.records[i].Passcode
-        ) {
-          if (json.records[i].AllExam != 0) {
-            $("#extakepost").empty();
-            var allsvexm = json.records[i].AllExam;
-            var singlessvexm = allsvexm.split("{ex},");
-            var lenstr = singlessvexm.length;
-            var st = 0;
-            var srno = 1;
-            for (st; st < lenstr - 1; st += 3) {
-              document.getElementById("extakepost").innerHTML +=
-                '<div align="left" class="savevexmdiv"><div style="text-align:left"><span style="float:left">No. ' +
-                srno +
-                "</span>" +
-                '<span style="float:right;"><button class="btn btn-primary svshowexres" onclick="shoeprevexresult(this);">Show Result</button><button class="btn btn-danger dltsvdexdt" onclick="deletelistrslt(this);">Delete</button></span></div><br>' +
-                '<p style="font-size:14px;"><span style="float:left;" class="exmiddsh">Exam ID: <span class="emxidsvdbrd">' +
-                singlessvexm[st] +
-                '</span></span><br><span style="float:left;">Enrollment ID: ' +
-                singlessvexm[st + 1] +
-                '</span></p><div class="exdtlsst">' +
-                singlessvexm[st + 2] +
-                "</div>" +
-                '<input class="exidsv" style="display:none;" value="' +
-                singlessvexm[st] +
-                '"><input class="enidsv" value="' +
-                singlessvexm[st + 1] +
-                '" style="display:none;"><br><hr>';
-              srno = srno + 1;
-            }
-          }
-        }
+    method: "GET",
+    dataType: "jsonp",
+  });
+}
+
+function gtallemxms(e) {
+  console.log(e.records);
+  if (e.records != "ID not found!") {
+    const allExamData = e.records[0].AllExam;
+    if (allExamData != 0) {
+      $("#extakepost").empty();
+      var singlessvexm = allExamData.split("{ex},");
+      var srno = 1;
+
+      for (var st = 0; st < singlessvexm.length - 1; st += 3) {
+        $("#extakepost").append(
+          '<div align="left" class="savevexmdiv">' +
+            '<div style="text-align:left">' +
+            '<span style="float:left">No. ' +
+            srno +
+            "</span>" +
+            '<span style="float:right;">' +
+            '<button class="btn btn-primary svshowexres" onclick="shoeprevexresult(this);">Show Result</button>' +
+            '<button class="btn btn-danger dltsvdexdt" onclick="deletelistrslt(this);">Delete</button>' +
+            "</span></div><br>" +
+            '<p style="font-size:14px;"><span style="float:left;" class="exmiddsh">Exam ID: <span class="emxidsvdbrd">' +
+            singlessvexm[st] +
+            '</span></span><br><span style="float:left;">Enrollment ID: ' +
+            singlessvexm[st + 1] +
+            '</span></p><div class="exdtlsst">' +
+            singlessvexm[st + 2] +
+            "</div>" +
+            '<input class="exidsv" style="display:none;" value="' +
+            singlessvexm[st] +
+            '">' +
+            '<input class="enidsv" value="' +
+            singlessvexm[st + 1] +
+            '" style="display:none;"><br><hr>'
+        );
+        srno++;
       }
     }
-  );
+  }
 }
 
 function shoeprevexresult(label) {
