@@ -961,7 +961,7 @@ $("#fullscrntod").click(function () {
 });
 
 let sketchLoaded = false;
-
+let sciclcLoaded = false;
 $("#opnsktch").click(function () {
   const isMobile = window.innerWidth <= 768;
 
@@ -993,6 +993,40 @@ $("#opnsktch").click(function () {
   if (!sketchLoaded) {
     $("#sketchFrame").attr("src", "https://sketch.mastrowall.com");
     sketchLoaded = true;
+  }
+});
+
+$("#sciclc").click(function () {
+  const isMobile = window.innerWidth <= 768;
+
+  if (isMobile) {
+    window.open(
+      "https://scicalc.mastrowall.com",
+      "_blank",
+      "width=400,height=700,scrollbars=yes,status=yes"
+    );
+    return;
+  }
+
+  if ($("#sciclcContainer").length === 0) {
+    const container = $(`
+      <div id="sciclcContainer" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999; background:#fff;">
+        <button id="closeSciclc" style="position:absolute; top:0px; right:10px; z-index:10000; padding:3px 10px; background:#f44336; color:white; border:none; border-bottom-right-radius:5px; border-bottom-left-radius:5px; cursor:pointer; font-size:16px; outline:none;">✕</button>
+        <iframe id="sciclcFrame" style="width:100%; height:100%; border:none;"></iframe>
+      </div>
+    `);
+    $("body").append(container);
+
+    $(document).on("click", "#closeSciclc", function () {
+      $("#sciclcContainer").hide();
+    });
+  }
+
+  $("#sciclcContainer").show();
+
+  if (!sciclcLoaded) {
+    $("#sciclcFrame").attr("src", "https://scicalc.mastrowall.com");
+    sciclcLoaded = true;
   }
 });
 
