@@ -999,15 +999,6 @@ $("#opnsktch").click(function () {
 $("#sciclc").click(function () {
   const isMobile = window.innerWidth <= 768;
 
-  if (isMobile) {
-    window.open(
-      "https://scicalc.mastrowall.com",
-      "_blank",
-      "width=400,height=700,scrollbars=yes,status=yes"
-    );
-    return;
-  }
-
   if ($("#sciclcContainer").length === 0) {
     const container = $(`
       <div id="sciclcContainer" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999; background:#fff;">
