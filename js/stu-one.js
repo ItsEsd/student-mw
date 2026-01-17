@@ -130,7 +130,6 @@ function ctrlqstuin(e) {
     document.getElementById("allsvevnt").value = preevn;
     getcalendar();
     ewfSetCookie(14);
-    extendLoginCookies();
   } else {
     $("#walllogin").slideUp("slow");
     document.getElementById("checkP").innerHTML =

@@ -20,26 +20,6 @@ var ewfSetCookie = function (exdays) {
     ";path=/;domain=mastrowall.com";
 };
 
-function getCookieValue(name) {
-  const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
-  return match ? match[2] : null;
-}
-
-function extendLoginCookies(days = 14) {
-  const d = new Date();
-  d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
-  const expires = "expires=" + d.toUTCString();
-  const base = ";path=/;domain=mastrowall.com";
-
-  const cookiesToExtend = ["mwallcstu", "mwallpswstus", "mwallpswstud"];
-
-  cookiesToExtend.forEach((name) => {
-    const value = getCookieValue(name);
-    if (value !== null) {
-      document.cookie = `${name}=${value};${expires}${base}`;
-    }
-  });
-}
 function getCookie(cname) {
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
