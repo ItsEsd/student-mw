@@ -64,7 +64,7 @@ function ctrlqstuin(e) {
     const selectElementCL = document.getElementById("upstclass");
     const classValue = res[0].Class;
     let optionExistsCL = Array.from(selectElementCL.options).some(
-      (option) => option.value === classValue
+      (option) => option.value === classValue,
     );
     if (!optionExistsCL) {
       const newOption = document.createElement("option");
@@ -76,7 +76,7 @@ function ctrlqstuin(e) {
     const selectElement = document.getElementById("upstboard");
     const boardValue = res[0].Board;
     let optionExists = Array.from(selectElement.options).some(
-      (option) => option.value === boardValue
+      (option) => option.value === boardValue,
     );
     if (!optionExists) {
       const newOption = document.createElement("option");
@@ -130,6 +130,7 @@ function ctrlqstuin(e) {
     document.getElementById("allsvevnt").value = preevn;
     getcalendar();
     ewfSetCookie(14);
+    extendLoginCookies();
   } else {
     $("#walllogin").slideUp("slow");
     document.getElementById("checkP").innerHTML =
@@ -296,7 +297,7 @@ $("#falseback,#falsebacktwo").click(function () {
 $(document).ready(function () {
   $(window).bind("resize", function () {
     $(
-      "#showServiceStu,#divrightst,#calcontain,.serviceStu,.stutitleastro"
+      "#showServiceStu,#divrightst,#calcontain,.serviceStu,.stutitleastro",
     ).show();
     if ($(window).width() < 1024) {
       $("#showServiceStu").css("overflow-y", "hidden");
@@ -330,7 +331,7 @@ function loadegames() {
     const lastDashicon = dashicons[dashicons.length - 1];
     lastDashicon.parentNode.insertBefore(
       egamesButton,
-      lastDashicon.nextSibling
+      lastDashicon.nextSibling,
     );
   }
 
