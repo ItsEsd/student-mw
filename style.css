@@ -379,7 +379,7 @@ h3 {
   margin-top: 0px;
   min-height: 100px;
   max-width: 600px;
-  max-height: 56vh;
+  max-height: calc(100vh - 300px);
   box-shadow: 0px 2px 10px #5f5f61;
   overflow-y: auto;
   background-color: white;
