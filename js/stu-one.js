@@ -102,14 +102,15 @@ function ctrlqstuin(e) {
     border-bottom: 1px solid #ddd;
   ">
     <input
-      type="text"
+      type="search"
       id="todSearch"
       placeholder="Search by ID, Key or Remarks"
       style="
         width: 100%;
         padding: 8px 10px;
         border: 1px solid #ccc;
-        border-radius: 6px;
+        border-radius: 6px; 
+        outline:none;
       "
     />
   </div>
@@ -169,8 +170,15 @@ function ctrlqstuin(e) {
   }
 }
 
-$(document).on("keyup", "#todSearch", function () {
+$(document).on("keyup search", "#todSearch", function () {
   var q = $(this).val().toLowerCase();
+  var found = 0;
+
+  if (!q) {
+    $("#storetodpost .storedtd").show().next("hr").show();
+    $("#noTodFound").remove();
+    return;
+  }
 
   $("#storetodpost .storedtd").each(function () {
     var id = $(this).data("id").toString().toLowerCase();
@@ -179,10 +187,21 @@ $(document).on("keyup", "#todSearch", function () {
 
     if (id.includes(q) || key.includes(q) || remark.includes(q)) {
       $(this).show().next("hr").show();
+      found++;
     } else {
       $(this).hide().next("hr").hide();
     }
   });
+
+  if (!found) {
+    if (!$("#noTodFound").length) {
+      $("#storetodpost").append(
+        '<div id="noTodFound" style="text-align:center;padding:20px;color:#777;font-weight:500;">No TOD found</div>',
+      );
+    }
+  } else {
+    $("#noTodFound").remove();
+  }
 });
 
 $(".closefw").on("click", function () {

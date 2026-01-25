@@ -154,7 +154,7 @@ function getalltds(e) {
     border-bottom: 1px solid #ddd;
   ">
     <input
-      type="text"
+      type="search"
       id="todSearch"
       placeholder="Search by ID, Key or Remarks"
       style="
@@ -162,6 +162,7 @@ function getalltds(e) {
         padding: 8px 10px;
         border: 1px solid #ccc;
         border-radius: 6px;
+        outline:none;
       "
     />
   </div>
