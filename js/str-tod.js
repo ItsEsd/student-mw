@@ -141,8 +141,31 @@ function getalltds(e) {
     var singlesttod = allsttod.split("{td},");
     var lenstr = singlesttod.length;
     var st = 0;
-    console.log(singlesttod);
     var srno = 1;
+    $("#storetodpost").empty();
+
+    $("#storetodpost").prepend(`
+  <div id="todSearchWrap" style="
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 10;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  ">
+    <input
+      type="text"
+      id="todSearch"
+      placeholder="Search by ID, Key or Remarks"
+      style="
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+      "
+    />
+  </div>
+`);
     for (st; st < lenstr - 1; st += 3) {
       document.getElementById("storetodpost").innerHTML +=
         '<div class="storedtd" data-id="' +

@@ -116,7 +116,6 @@ function ctrlqstuin(e) {
 `);
       var allsttod = res[0].AllTOD;
       var singlesttod = allsttod.split("{td},");
-      console.log(singlesttod);
       var lenstr = singlesttod.length;
       var st = 0;
       var srno = 1;
