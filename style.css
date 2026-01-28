@@ -1041,6 +1041,7 @@ h3 {
   padding-right: 6px;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
 }
 #showedulink img {
   width: 50px;
