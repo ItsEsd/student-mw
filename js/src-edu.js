@@ -14,11 +14,11 @@ $(document).ready(function () {
 
       let topicNote = allEducators.map(
         (r) =>
-          `${r.FName} ${r.LName}<img class='serchpropic' src='${r.ProfilePic}'>`
+          `${r.FName} ${r.LName}<img class='serchpropic' src='${r.ProfilePic}'>`,
       );
 
       autocomplete(document.getElementById("searcheduc"), topicNote);
-    }
+    },
   );
 
   function autocomplete(inp, arr) {
@@ -122,7 +122,7 @@ $(document).ready(function () {
         serched === `${r.FName} ${r.LName}` ||
         serchsub === r.Subject ||
         serchbrd === r.Board ||
-        serchcls === r.Class
+        serchcls === r.Class,
     );
 
     document.getElementById("loader_srced").style.display = "none";
@@ -145,7 +145,7 @@ $(document).ready(function () {
             <br><br>
             &#8226; ${r.Board} &#8226; ${r.Class} &#8226; ${r.Subject}
           </div>
-          <input class='edaddid' style='display:none;' value='${r.CardId}'/>`
+          <input class='edaddid' style='display:none;' value='${r.CardId}'/>`,
       );
     });
   });

@@ -656,49 +656,55 @@
   padding-right: 8px;
   border-radius: 10px;
   background: #1616168c;
-  text-align: center;
+  text-align: left;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  height: auto;
+  overflow-y: scroll;
 }
 .srvcdived {
+  width: 48%;
   min-width: 120px;
-  max-width: 140px;
-  height: 148px;
+  height: 80px;
   background-color: white;
-  padding: 5px;
+  padding: 15px;
   border-radius: 10px !important;
   cursor: pointer;
   display: inline-block;
-  text-align: center;
+  text-align: left;
   margin-bottom: 4px;
   margin-top: 4px;
   margin-right: 4px;
-  background: linear-gradient(-75deg, #e2e2e2, #c2c2c2, #e2e2e2);
+  background: linear-gradient(-75deg, #00000069, #c2c2c2, #e2e2e2);
   background-size: 400% 400%;
   animation: gradient 2s ease infinite;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  box-shadow: 0px 2px 10px 0px #000000a2;
 }
 .srvcdived:hover {
   -webkit-transform: scale(1.04);
   transform: scale(1.04);
   box-shadow: 0px 0px 4px 1px #0000ffb6;
 }
-.srvcdived:nth-child(5) {
-  margin-right: 0px;
-}
-.srvcdived:nth-child(1) {
-  -webkit-transform: scale(1);
-  transform: scale(1);
-  box-shadow: none;
-  cursor: none;
-}
+
 .srvcdived img {
   width: 100%;
   padding: 10px;
-  max-width: 110px;
+  max-width: 70px;
   pointer-events: none;
-  border-bottom: 1px solid #a5a5a5;
+  /* border-bottom: 1px solid #a5a5a5; */
 }
 .srvcdived p {
   padding-top: 2px;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #757575;
 }
 
 #crtelem {
@@ -739,7 +745,7 @@
   background-color: #ffffff;
   text-align: left;
   padding: 4px;
-  box-shadow: 0px 2px 10px 1px #ffffff90;
+  box-shadow: 0px 2px 15px 0px #0000004f;
   margin-top: 40px;
   margin-bottom: 40px;
   border-radius: 10px;
@@ -751,15 +757,16 @@
 }
 .clssrvccon {
   top: 0px;
-  left: 0px;
-  position: absolute;
+  right: 15px;
+  position: fixed;
   padding: 6px 20px;
   background-color: #f54949;
   color: white;
   cursor: pointer;
   z-index: 10000;
-  border: 3px solid #d3d3d3;
   font-weight: 700;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
 .clssrvccon:hover {
   background-color: #e92626;
@@ -1375,13 +1382,7 @@ ul.icons li:last-child {
     flex: 1 0 100% !important;
     /* max-width: 100%; */
   }
-  .srvcdived {
-    min-width: 100px !important;
-    height: 100px;
-  }
-  .srvcdived img {
-    width: 60px;
-  }
+
   #showedsrvc {
     text-align: left;
   }

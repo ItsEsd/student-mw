@@ -749,6 +749,16 @@ h3 {
   color: #0c09c9;
   border-radius: 5px;
 }
+#alstds {
+  top: -10px;
+  right: 25px;
+  background-color: #5250d4;
+  position: absolute;
+  padding: 2px 10px;
+  color: white;
+  border-radius: 15px;
+  box-shadow: 0px 2px 10px 0px #3f3f3f5a;
+}
 .edproindv {
   text-align: left;
   width: 96%;
@@ -760,6 +770,7 @@ h3 {
   font-size: 14px;
   border-radius: 10px !important;
   color: #868686;
+  position: relative;
 }
 .edproclroom button {
   font-size: 14px;
@@ -894,22 +905,28 @@ h3 {
   background: #ccccccd6;
 }
 #fullscrntod {
-  bottom: 10px;
-  right: 20px;
+  bottom: 0px;
+  right: 15px;
   font-weight: 600;
   color: #bebebe;
   position: fixed;
   cursor: pointer;
-  background-color: #181818;
+  background-color: #18181884;
   padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
 }
 #fullscrntod svg {
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
 }
 #fullscrntod svg:hover {
-  -webkit-transform: scale(1.06);
-  transform: scale(1.06);
+  -webkit-transform: scale(1.4);
+  transform: scale(1.4);
+  transition: ease 0.1s all;
 }
 #edtdstrfulsr {
   display: none;
@@ -942,7 +959,8 @@ h3 {
   height: 100%;
   display: inline-block;
   overflow-y: scroll;
-  background-color: #1a2da582;
+  background-color: #06060682;
+  position: relative;
 }
 #edtdstrds {
   bottom: 20px;
@@ -1004,7 +1022,7 @@ h3 {
 
 #showedprotod {
   display: block;
-  min-height: 80vh;
+  min-height: 85vh;
   background: linear-gradient(-75deg, #e2e2e2, #c2c2c2, #e2e2e2);
   background-size: 400% 400%;
   animation: gradient 2s ease infinite;
@@ -1021,6 +1039,8 @@ h3 {
 #showedulink {
   display: none;
   padding-right: 6px;
+  display: flex;
+  align-items: center;
 }
 #showedulink img {
   width: 50px;
@@ -1039,6 +1059,12 @@ h3 {
   position: fixed;
   background-color: #3434c71f;
   z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-left: 15px;
+  color: white;
 }
 /* ################### TOD ######################33 */
 .wrapTOD {
@@ -1105,4 +1131,21 @@ h3 {
   bottom: 0px;
   left: 0px;
   position: fixed;
+  z-index: 1000000 !important;
+  display: none;
+}
+
+#clsrmcal {
+  cursor: pointer;
+  margin-right: 5px;
+  margin-left: 7px;
+}
+
+#sketchdrw {
+  margin-left: 10px;
+  cursor: pointer;
+}
+#clsrmcal:hover,
+#sketchdrw:hover {
+  opacity: 0.8;
 }

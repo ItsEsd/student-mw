@@ -206,9 +206,11 @@ $(document).on("keyup search", "#todSearch", function () {
 
 $(".closefw").on("click", function () {
   $(".fullwidth").slideUp("fast");
+  $("#rc-widget").hide();
 });
 function opensframe() {
   $("#fmcontainers").slideDown("fast");
+  $("#rc-widget").show();
 }
 
 function opentframe() {

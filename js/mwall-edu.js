@@ -333,6 +333,7 @@ function showeduin(label) {
     borderRadius: "10px",
   });
   document.getElementById("eduproste").style.display = "block";
+  document.getElementById("rc-widget").style.display = "block";
   var list = document.getElementsByClassName("edproclroomfin");
   list = [].slice.call(list);
   var posofinput = list.indexOf(label);
@@ -369,7 +370,7 @@ function myedctr(e) {
   if (e.records != "ID not found!") {
     const res = e.records;
     document.getElementById("showedpro").innerHTML =
-      "<div class='edproindv'><span class='ednametitle' id='mednam'>" +
+      "<div class='edproindv'><span id='alstds'></span><span class='ednametitle' id='mednam'>" +
       res.FName +
       " " +
       res.LName +
@@ -527,10 +528,6 @@ function myedctr(e) {
     var nofedcmnt = (allcmnt.length - 1) / 6;
     document.getElementById("showedsrvc").innerHTML = `
   <div class="srvcdived">
-  <img src="images/edsrvc/allstd.png">
-  <p id="alstds">All Students</p>
-  </div>
-  <div class="srvcdived">
   <img src="images/edsrvc/linkins.png">
   <p id="allnks">LinkIns</p>
   </div>
@@ -547,7 +544,7 @@ function myedctr(e) {
   <p id="allcmnts">Comments</p>
   </div>`;
     document.getElementById("alstds").innerHTML =
-      "All Students " + "(" + nofallstd + ")";
+      "Approved Students " + "(" + nofallstd + ")";
     document.getElementById("allnks").innerHTML = "LinkIns";
     document.getElementById("altds").innerHTML =
       "TOD Store " + "(" + nofaltd + ")";
@@ -560,7 +557,7 @@ function myedctr(e) {
     $("body").append(elemed);
 
     document
-      .getElementsByClassName("srvcdived")[2]
+      .getElementsByClassName("srvcdived")[1]
       .addEventListener("click", function () {
         if (nofaltd == 0) {
           return false;
@@ -597,7 +594,7 @@ function myedctr(e) {
       });
 
     document
-      .getElementsByClassName("srvcdived")[3]
+      .getElementsByClassName("srvcdived")[2]
       .addEventListener("click", function () {
         if (nofotexm == 0) {
           return false;
@@ -646,7 +643,7 @@ function myedctr(e) {
       });
 
     document
-      .getElementsByClassName("srvcdived")[1]
+      .getElementsByClassName("srvcdived")[0]
       .addEventListener("click", function () {
         var edtc = $("#eduidst").val();
         var tdkid = window.btoa(edtc);
@@ -663,7 +660,7 @@ function myedctr(e) {
         $("#crtelem").append(elemtds);
       });
     document
-      .getElementsByClassName("srvcdived")[4]
+      .getElementsByClassName("srvcdived")[3]
       .addEventListener("click", function () {
         $("#crtelem").empty();
         $("#crtelem").hide();
@@ -962,7 +959,7 @@ $("#fullscrntod").click(function () {
 
 let sketchLoaded = false;
 let sciclcLoaded = false;
-$("#opnsktch").click(function () {
+$("#opnsktch,#sketchdrw").click(function () {
   const isMobile = window.innerWidth <= 768;
 
   if (isMobile) {
@@ -976,7 +973,7 @@ $("#opnsktch").click(function () {
 
   if ($("#sketchContainer").length === 0) {
     const container = $(`
-      <div id="sketchContainer" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999; background:#fff;">
+      <div id="sketchContainer" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:999999; background:#fff;">
         <button id="closeSketch" style="position:absolute; top:0px; right:10px; z-index:10000; padding:3px 10px; background:#f44336; color:white; border:none; border-bottom-right-radius:5px; border-bottom-left-radius:5px; cursor:pointer; font-size:16px; outline:none;">✕</button>
         <iframe id="sketchFrame" style="width:100%; height:100%; border:none;"></iframe>
       </div>
@@ -996,10 +993,10 @@ $("#opnsktch").click(function () {
   }
 });
 
-$("#sciclc").click(function () {
+$("#sciclc,#clsrmcal").click(function () {
   if ($("#sciclcContainer").length === 0) {
     const container = $(`
-      <div id="sciclcContainer" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999; background:#fff;">
+      <div id="sciclcContainer" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:999999; background:#fff;">
         <button id="closeSciclc" style="position:absolute; top:0px; right:10px; z-index:10000; padding:3px 10px; background:#f44336; color:white; border:none; border-bottom-right-radius:5px; border-bottom-left-radius:5px; cursor:pointer; font-size:16px; outline:none;">✕</button>
         <iframe id="sciclcFrame" style="width:100%; height:100%; border:none;"></iframe>
       </div>

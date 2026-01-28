@@ -27,7 +27,7 @@ chresult.addEventListener("submit", (event) => {
       for (var i = 0; i < json.records.length - 1; i++) {
         if (exid === json.records[i].ExamID) {
           var stustring = JSON.parse(
-            JSON.stringify(json.records[i].EnrolledStuFinal)
+            JSON.stringify(json.records[i].EnrolledStuFinal),
           );
           var sstring = stustring.split(",");
           var lenstrk = sstring.length;
@@ -81,7 +81,7 @@ chresult.addEventListener("submit", (event) => {
       }
       $("#experformance").slideDown("fast");
       document.getElementById("falsebacktwo").style.display = "none";
-    }
+    },
   );
 });
 
@@ -182,7 +182,7 @@ function gtallemxms(e) {
             '">' +
             '<input class="enidsv" value="' +
             singlessvexm[st + 1] +
-            '" style="display:none;"><br><hr>'
+            '" style="display:none;"><br><hr>',
         );
         srno++;
       }
@@ -213,7 +213,7 @@ function shoeprevexresult(label) {
       for (var i = 0; i < json.records.length - 1; i++) {
         if (examid === json.records[i].ExamID) {
           var stustring = JSON.parse(
-            JSON.stringify(json.records[i].EnrolledStuFinal)
+            JSON.stringify(json.records[i].EnrolledStuFinal),
           );
           var sstring = stustring.split(",");
           var lenstrk = sstring.length;
@@ -267,7 +267,7 @@ function shoeprevexresult(label) {
       }
 
       document.getElementById("falsebacktwo").style.display = "none";
-    }
+    },
   );
 }
 
