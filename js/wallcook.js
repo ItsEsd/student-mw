@@ -1,3 +1,110 @@
+/* ===============================
+   GistBox Link Interceptor
+   =============================== */
+
+(function () {
+  const allowedDomains = [
+    "library.mastrowall.in",
+    "blog.mastrowall.in",
+    "home.mastrowall.in",
+  ];
+
+  function isAllowedDomain(url) {
+    try {
+      const parsed = new URL(url, window.location.href);
+      return allowedDomains.includes(parsed.hostname);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function openInGistBox(url) {
+    // showNotification("Opening external link in <u>GistBox</u>");
+    setTimeout(() => {
+      showGistBox(url);
+    }, 1000);
+  }
+
+  /* -------------------------------
+     1) Anchor <a target="_blank">
+     ------------------------------- */
+  document.addEventListener("click", function (e) {
+    const anchor = e.target.closest("a");
+    if (!anchor || anchor.target !== "_blank" || !anchor.href) return;
+
+    if (!isAllowedDomain(anchor.href)) return;
+
+    e.preventDefault();
+    openInGistBox(anchor.href);
+  });
+
+  /* -------------------------------
+     2) window.open interception
+     ------------------------------- */
+  const originalWindowOpen = window.open;
+
+  window.open = function (url, target, features) {
+    if (target === "_blank" && isAllowedDomain(url)) {
+      openInGistBox(url);
+      return null; // stop new tab
+    }
+
+    return originalWindowOpen.call(window, url, target, features);
+  };
+})();
+
+function showGistBox(url) {
+  document.body.style.overflowY = "hidden";
+  let existinggist = document.getElementById("gistbox");
+  if (existinggist instanceof HTMLElement) {
+    existinggist.style.display =
+      existinggist.style.display === "none" || !existinggist.style.display
+        ? "block"
+        : "none";
+    updateFetchUrl(url);
+  } else {
+    const box = document.createElement("div");
+    box.id = "gistbox";
+    box.className = "gistbox";
+    box.style.display = "block";
+    const closeBtn = document.createElement("button");
+    closeBtn.className = "gistbox-close";
+    closeBtn.textContent = "Close GistBox";
+    closeBtn.onclick = () => {
+      box.style.display = "none";
+      document.body.style.overflowY = "auto";
+    };
+
+    const iframe = document.createElement("iframe");
+    iframe.src =
+      "https://gistbox.mastrowall.com/?fetchurl=" + encodeURIComponent(url);
+    iframe.className = "gistbox-iframe";
+    iframe.id = "gistbox-iframe";
+    iframe.allowFullscreen = true;
+    box.appendChild(closeBtn);
+    box.appendChild(iframe);
+    document.body.appendChild(box);
+  }
+}
+
+function updateFetchUrl(newUrl) {
+  const iframegist = document.getElementById("gistbox-iframe");
+  if (iframegist && iframegist.contentWindow) {
+    iframegist.contentWindow.postMessage(
+      {
+        type: "navigatelinkins",
+        url: newUrl,
+        headtit: "Testing",
+      },
+      "https://gistbox.mastrowall.com/",
+    );
+  } else {
+    console.warn("iframe not ready or not found");
+  }
+}
+
+// Cookies
+
 var ewfSetCookie = function (exdays) {
   var psmed = $("#email").val();
   var pswed = $("#pcodeStu").val();
