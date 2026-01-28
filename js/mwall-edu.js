@@ -122,7 +122,7 @@ function srcedidwait(edidsrc) {
         refreshBtn.style.opacity = "1";
         refreshBtn.style.pointerEvents = "auto";
       }
-    }
+    },
   );
 }
 
@@ -307,7 +307,7 @@ function srcedidapprv(edidsrcap) {
         refreshBtn.style.opacity = "1";
         refreshBtn.style.pointerEvents = "auto";
       }
-    }
+    },
   );
 }
 
@@ -412,7 +412,7 @@ function myedctr(e) {
       window.open(
         edwebcht,
         "_blank",
-        "location=center,height=670,width=1600,left=0,top=100,scrollbars=yes,status=yes"
+        "location=center,height=670,width=1600,left=0,top=100,scrollbars=yes,status=yes",
       );
     });
 
@@ -881,7 +881,7 @@ function viewstods(label) {
   window.open(
     newlk,
     "_blank",
-    "location=center,height=670,width=1600,left=0,top=100,scrollbars=yes,status=yes"
+    "location=center,height=670,width=1600,left=0,top=100,scrollbars=yes,status=yes",
   );
 }
 
@@ -969,7 +969,7 @@ $("#opnsktch").click(function () {
     window.open(
       "https://sketch.mastrowall.com",
       "_blank",
-      "width=400,height=700,scrollbars=yes,status=yes"
+      "width=400,height=700,scrollbars=yes,status=yes",
     );
     return;
   }
@@ -1038,7 +1038,7 @@ function getcalendar() {
   var flcaldate = tois.substring(0, 10);
   var calendar = new FullCalendar.Calendar(calendarEl, {
     aspectRatio: 1,
-    initialView: "dayGridMonth",
+    initialView: "listYear",
     headerToolbar: {
       center: "title",
       right: "dayGridYear,dayGridMonth,timeGridDay,timeGridWeek,listYear",
@@ -1112,7 +1112,7 @@ function getcalendar() {
       if (confirm("Are you sure you want to delete this event?")) {
         isRequestInProgress = true;
         var waitingDiv = $(
-          '<div id="waitingMessageCL">Please wait, processing...</div>'
+          '<div id="waitingMessageCL">Please wait, processing...</div>',
         );
         $("#calendar").append(waitingDiv);
         arg.event.remove();
@@ -1183,7 +1183,7 @@ function enrollassignst(examid, epass, btn) {
 
   // Confirm dialog
   const confirmEnroll = confirm(
-    "Are you sure you want to enroll/assign this exam?"
+    "Are you sure you want to enroll/assign this exam?",
   );
   if (!confirmEnroll) return; // Stop if user cancels
 
@@ -1195,14 +1195,14 @@ function enrollassignst(examid, epass, btn) {
   // Collect student info
   var stuid = encodeURIComponent($("#stuid").val());
   var namestu = encodeURIComponent(
-    JSON.stringify(document.getElementById("avtrbrdname").textContent)
+    JSON.stringify(document.getElementById("avtrbrdname").textContent),
   );
   var eid = encodeURIComponent(JSON.stringify($("#email").val()));
   var enid = encodeURIComponent(
     JSON.stringify(
       Math.random().toString(26).substring(2, 7) +
-        Math.random().toString(26).substring(2, 7)
-    )
+        Math.random().toString(26).substring(2, 7),
+    ),
   );
 
   // Build URL
@@ -1293,7 +1293,7 @@ function getenrolledexm() {
   }
 
   const url = `${scriptUrl}?action=getenrolled&email=${encodeURIComponent(
-    email
+    email,
   )}&callback=ctrlqenrldt`;
 
   jQuery.ajax({
@@ -1317,9 +1317,8 @@ function ctrlqenrldt(e) {
 
     showEnrolledExams(exams);
   } else {
-    document.getElementById(
-      "exam-list"
-    ).innerHTML = `<p class='nenrlexm'><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 -960 960 960"  fill="#76767674"><path d="m388-212-56-56 92-92-92-92 56-56 92 92 92-92 56 56-92 92 92 92-56 56-92-92-92 92ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Z"/></svg>No enrolled exams found.</p>`;
+    document.getElementById("exam-list").innerHTML =
+      `<p class='nenrlexm'><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 -960 960 960"  fill="#76767674"><path d="m388-212-56-56 92-92-92-92 56-56 92 92 92-92 56 56-92 92 92 92-56 56-92-92-92 92ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Z"/></svg>No enrolled exams found.</p>`;
     document.querySelectorAll(".ttlenrexms").forEach((el) => {
       el.textContent = "(0)";
     });
@@ -1364,8 +1363,8 @@ function showEnrolledExams(data) {
     card.innerHTML = `
       <h3>
         <span class="title-text" data-full="${exam.b}">${trimText(
-      exam.b
-    )}</span>
+          exam.b,
+        )}</span>
         <span>${exam.s === "NA" ? "Not Completed ⛔" : "Completed ✅"}</span>
       </h3><input type="hidden" readonly class="enrldexmid" value="${exam.a}">
       <p><b>Description:</b> ${exam.c}</p>
@@ -1378,8 +1377,8 @@ function showEnrolledExams(data) {
       <div class="enrlexmbtngrp">
         <button class="go-btn" 
           onclick="goToTest('${exam.a}', '${enrollId}', '${JSON.parse(
-      exam.p
-    )}')" 
+            exam.p,
+          )}')" 
           ${exam.s !== "NA" ? "disabled" : ""}>
           Go to Test
         </button>
@@ -1427,9 +1426,9 @@ function goToTest(examId, enrollId, pass) {
   // Example redirect:
   window.open(
     `https://mastrowall.com/online-test/?id=${btoa(examId)}&enroll=${btoa(
-      enrollId
+      enrollId,
     )}&pass=${btoa(pass)}&valid=true`,
-    "_blank"
+    "_blank",
   );
 }
 
