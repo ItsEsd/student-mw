@@ -89,7 +89,7 @@ function showGistBox(url) {
     document.body.appendChild(box);
   }
   if (history.state !== "gistbox-open") {
-    history.pushState("gistbox-open", "");
+    history.pushState("gistbox-open", "", "#gistbox");
   }
 }
 
