@@ -73,6 +73,9 @@ function showGistBox(url) {
     closeBtn.onclick = () => {
       box.style.display = "none";
       document.body.style.overflowY = "auto";
+      if (history.state !== "gistbox-open") {
+        history.replaceState(null, "");
+      }
     };
 
     const iframe = document.createElement("iframe");
@@ -84,6 +87,9 @@ function showGistBox(url) {
     box.appendChild(closeBtn);
     box.appendChild(iframe);
     document.body.appendChild(box);
+  }
+  if (history.state !== "gistbox-open") {
+    history.pushState("gistbox-open", "");
   }
 }
 
@@ -102,6 +108,14 @@ function updateFetchUrl(newUrl) {
     console.warn("iframe not ready or not found");
   }
 }
+
+window.addEventListener("popstate", (ev) => {
+  if (ev.state !== "gistbox-open") {
+    document.getElementById("gistbox").style.display = "none";
+    document.body.style.overflowY = "auto";
+    history.replaceState(null, "");
+  }
+});
 
 // Cookies
 
