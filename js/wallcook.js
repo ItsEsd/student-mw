@@ -73,8 +73,8 @@ function showGistBox(url) {
     closeBtn.onclick = () => {
       box.style.display = "none";
       document.body.style.overflowY = "auto";
-      if (history.state !== "gistbox-open") {
-        history.replaceState(null, "");
+      if (history.state === "gistbox-open") {
+        history.back();
       }
     };
 
