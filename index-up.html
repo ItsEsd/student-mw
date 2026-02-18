@@ -276,13 +276,6 @@
                         </a>
                      </li>
                      <li>
-                        <a target="_blank" href="https://twitter.com/mastrowallE">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
-                              <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
-                           </svg>
-                        </a>
-                     </li>
-                     <li>
                         <a target="_blank" href="https://www.linkedin.com/company/mastrowall">
                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
                               <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
@@ -317,6 +310,7 @@
          <div id="calcontain">
             <div id='calendar'></div>
          </div>
+         <div id="rc-widget"></div>
       </div>
       <section>
          <div id="fmcontainers" class="fullwidth" align="center">
@@ -330,7 +324,6 @@
                </span>
             </div>
             <div style="height:100%;"><iframe class="sandtframe" height="100%" src="https://mastrowall.com/search" frameborder="0" allowfullscreen></iframe> </div>
-            <div id="rc-widget"></div>
          </div>
       </section>
       <section>
@@ -565,12 +558,12 @@
       <section>
          <div id="eduproste" align="center">
             <div id="eduprotitle">
-               <span class="closefw-two" onclick="$('#eduproste').slideUp('fast');">&times;</span> <!-- <span style="float: right;padding-bottom:10px;margin-right:6px;font-size:20px;"> My Educator</span> --> 
+               <span style="display: flex;align-items: center;justify-content: flex-start;gap:6px;"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="m590-488 160-92-160-92-160 92 160 92Zm0 122 110-64v-84l-110 64-110-64v84l110 64ZM480-480Zm320 320H600q0-20-1.5-40t-4.5-40h206v-480H160v46q-20-3-40-4.5T80-680v-40q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160Zm-720 0v-120q50 0 85 35t35 85H80Zm200 0q0-83-58.5-141.5T80-360v-80q117 0 198.5 81.5T360-160h-80Zm160 0q0-75-28.5-140.5t-77-114q-48.5-48.5-114-77T80-520v-80q91 0 171 34.5T391-471q60 60 94.5 140T520-160h-80Z"/></svg>Classroom</span><span class="closefw-two" onclick="$('#eduproste,#rc-widget').slideUp('fast');">&times;</span> <!-- <span style="float: right;padding-bottom:10px;margin-right:6px;font-size:20px;"> My Educator</span> --> 
             </div>
             <div id="proshowedu" class="row"align="center">
                <div id="proshowedu-one" class="col-md-6">
                   <br> 
-                  <div id="showedulink" align="right"><img src="/images/edsrvc/edprofile.png"><span id="edunlink"></span><span id="edullink"></span>
+                  <div id="showedulink" align="right"><img src="/images/edsrvc/edprofile.png"><svg xmlns="http://www.w3.org/2000/svg" id="sketchdrw" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M160-120v-170l527-526q12-12 27-18t30-6q16 0 30.5 6t25.5 18l56 56q12 11 18 25.5t6 30.5q0 15-6 30t-18 27L330-120H160Zm80-80h56l393-392-28-29-29-28-392 393v56Zm560-503-57-57 57 57Zm-139 82-29-28 57 57-28-29ZM560-120q74 0 137-37t63-103q0-36-19-62t-51-45l-59 59q23 10 36 22t13 26q0 23-36.5 41.5T560-200q-17 0-28.5 11.5T520-160q0 17 11.5 28.5T560-120ZM183-426l60-60q-20-8-31.5-16.5T200-520q0-12 18-24t76-37q88-38 117-69t29-70q0-55-44-87.5T280-840q-45 0-80.5 16T145-785q-11 13-9 29t15 26q13 11 29 9t27-13q14-14 31-20t42-6q41 0 60.5 12t19.5 28q0 14-17.5 25.5T262-654q-80 35-111 63.5T120-520q0 32 17 54.5t46 39.5Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" id="clsrmcal" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M320-240h60v-80h80v-60h-80v-80h-60v80h-80v60h80v80Zm200-30h200v-60H520v60Zm0-100h200v-60H520v60Zm44-152 56-56 56 56 42-42-56-58 56-56-42-42-56 56-56-56-42 42 56 56-56 58 42 42Zm-314-70h200v-60H250v60Zm-50 472q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/></svg><span id="edunlink"></span><span id="edullink"></span>
                   <span id="edulivwn"><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><circle cx="24" cy="24" r="6" fill="#f44336"/><path fill="#f44336" d="M17.09,16.789L14.321,13.9C11.663,16.448,10,20.027,10,24s1.663,7.552,4.321,10.1l2.769-2.889 C15.19,29.389,14,26.833,14,24C14,21.167,15.19,18.61,17.09,16.789z"/><path fill="#f44336" d="M33.679,13.9l-2.769,2.889C32.81,18.611,34,21.167,34,24c0,2.833-1.19,5.389-3.09,7.211l2.769,2.889 C36.337,31.552,38,27.973,38,24S36.337,16.448,33.679,13.9z"/><g><path fill="#f44336" d="M11.561,11.021l-2.779-2.9C4.605,12.125,2,17.757,2,24s2.605,11.875,6.782,15.879l2.779-2.9 C8.142,33.701,6,29.1,6,24S8.142,14.299,11.561,11.021z"/><path fill="#f44336" d="M39.218,8.121l-2.779,2.9C39.858,14.299,42,18.9,42,24s-2.142,9.701-5.561,12.979l2.779,2.9 C43.395,35.875,46,30.243,46,24S43.395,12.125,39.218,8.121z"/></g></svg> Live</span>
                   </div>
                   <div id="showedpro"> </div>
@@ -582,10 +575,9 @@
                         <div class="srvcdived"></div>
                         <div class="srvcdived"></div>
                         <div class="srvcdived"></div>
-                        <div class="srvcdived"></div>
                      </div>
                   </center>
-                  <div id="brndinfo">© M A S T R O W A L L</div>
+                  <div id="brndinfo">© M A S T R O W A L L | AMRIT EdTech</div>
                </div>
                <div id="proshowedu-two"class="col-md-6">
                   <div id="showedprotod"> </div>
@@ -630,6 +622,6 @@
       </div>
       <script src="js/wallcook.js"></script><script src="js/stu-one.js"></script><script src="js/re-pass.js"></script><script src="js/src-edu.js"></script><script src="js/mwall-edu.js"></script> <script src="js/str-tod.js"></script><script src="js/chck-result.js"></script> 
       <script> if ('serviceWorker' in navigator) { navigator.serviceWorker.register('service-worker.js'); } else { console.log("Service worker is not supported"); } setInterval(function(){console.clear();},100); </script> 
-      <!-- <script> const loca = window.location.hostname; if (loca === "student.mastrowall.com") { document.body.style.display = "block"; } else { document.body.innerHTML = ""; } </script>  -->
+      <!-- <script> const loca = window.location.hostname; if (loca === "student.mastrowall.com") { document.body.style.display = "block"; } else { document.body.innerHTML = window.atob( "PGRpdiBzdHlsZT0nZm9udC1zaXplOjE1cHg7Y29sb3I6IzY2NjtkaXNwbGF5OmZsZXg7YWxpZ24taXRlbXM6Y2VudGVyO2p1c3RpZnktY29udGVudDpjZW50ZXI7aGVpZ2h0OjEwMHZoO3dpZHRoOjEwMCU7YmFja2dyb3VuZDojZmZmO2ZsZXgtZGlyZWN0aW9uOmNvbHVtbjsnPjxpbWcgc3JjPSdodHRwczovL2Ftcml0LWNvcnAuY29tL2NvcnAtZHJpdmUvaW1nc291cmNlL3BhZ2Utbm90LWF2YWlsYWJsZS5zdmcnIHN0eWxlPSd3aWR0aDo5MCU7bWF4LXdpZHRoOjQwMHB4Oyc+PHByZSBzdHlsZT0iY29sb3I6IzY2NjsiPiYjMTY5OyBBTVJJVC1jb3JwLmNvbTwvcHJlPjwvZGl2Pg==", ); } </script>  -->
     </body>
 </html>
