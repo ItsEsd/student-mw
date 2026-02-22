@@ -346,9 +346,23 @@ function strstuinfo(e) {
     document.getElementById("smitstproinfo").disabled = false;
   }
 }
-
+if (window.innerWidth < 900) {
+  if (history.state !== "sec-clsrmcal") {
+    history.pushState("sec-clsrmcal", "");
+  }
+  window.addEventListener("popstate", function () {
+    $("#showServiceStu,#calcontain").hide();
+    $("#showServiceStu").css("overflow-y", "auto");
+    if (history.state === "sec-clsrmcal") {
+      history.back();
+    }
+  });
+}
 $("#opensrvc").click(function () {
   $("#showServiceStu,.serviceStu,.stutitleastro").show();
+  if (history.state !== "sec-clsrmcal") {
+    history.pushState("sec-clsrmcal", "");
+  }
 });
 $("#hidenavl").click(function () {
   $("#showServiceStu,#calcontain").hide();
@@ -357,6 +371,9 @@ $("#hidenavl").click(function () {
 $("#opcal").click(function () {
   $("#showServiceStu,#calcontain,.stutitleastro").show();
   $("#showServiceStu").css("overflow-y", "hidden");
+  if (history.state !== "sec-clsrmcal") {
+    history.pushState("sec-clsrmcal", "");
+  }
 });
 $("#falseback,#falsebacktwo").click(function () {
   $("#falseback,#falsebacktwo").slideUp("fast");

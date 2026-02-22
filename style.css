@@ -1,4 +1,7 @@
 /* M A S T R O W A L L */
+* {
+  scroll-behavior: smooth;
+}
 body {
   overflow-x: hidden;
   overscroll-behavior-x: none;
