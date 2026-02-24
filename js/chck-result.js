@@ -163,9 +163,9 @@ function gtallemxms(e) {
         $("#extakepost").append(
           '<div align="left" class="savevexmdiv">' +
             '<div style="text-align:left">' +
-            '<span style="float:left">No. ' +
+            '<span style="float:left"><b>No. ' +
             srno +
-            "</span>" +
+            "</b></span>" +
             '<span style="float:right;">' +
             '<button class="btn btn-primary svshowexres" onclick="shoeprevexresult(this);">Show Result</button>' +
             '<button class="btn btn-danger dltsvdexdt" onclick="deletelistrslt(this);">Delete</button>' +
@@ -182,7 +182,7 @@ function gtallemxms(e) {
             '">' +
             '<input class="enidsv" value="' +
             singlessvexm[st + 1] +
-            '" style="display:none;"><br><hr>',
+            '" style="display:none;"><hr>',
         );
         srno++;
       }

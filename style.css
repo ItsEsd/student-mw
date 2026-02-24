@@ -160,7 +160,7 @@ label {
   box-shadow: none;
 }
 .geninfoid {
-  font-size: 14px;
+  font-size: 13px;
   margin-top: 4px;
 }
 
@@ -365,7 +365,7 @@ h3 {
 #assignededu,
 #extakepost {
   margin: 10px;
-  padding: 40px;
+  padding: 20px;
   margin-top: 60px;
   min-height: 100px;
   max-width: 600px;
