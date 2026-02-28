@@ -452,8 +452,8 @@ function myedctr(e) {
       for (var w = 0; w < lenstr - 1; w++) {
         document.getElementById("showedprotod").innerHTML +=
           '<div class="wrapTOD"><div class="card">' +
-          '<img class="card-img-top" src="' +
-          singlest[w + 3] +
+          '<img class="card-img-top" onerror="this.style.display=`none`" src="' +
+          singlest[w + 4] +
           '"><div class="card-body"><h4>' +
           singlest[w + 1] +
           '</h4></div> <div class="card-footer" style="text-align:left;"><p>' +
