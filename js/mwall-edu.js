@@ -463,8 +463,8 @@ function myedctr(e) {
           '"><br><hr class="edprevtodhr">';
         document.getElementById("edtdstrfulsr").innerHTML +=
           '<div class="wrapTODfl"><div class="card">' +
-          '<img class="card-img-top" src="' +
-          singlest[w + 3] +
+          '<img class="card-img-top" onerror="this.style.display=`none`" src="' +
+          singlest[w + 4] +
           '"><div class="card-body"><h4>' +
           singlest[w + 1] +
           '</h4></div> <div class="card-footer" style="text-align:left;"><p>' +
@@ -472,7 +472,7 @@ function myedctr(e) {
           '</p></div> </div></div><input class="topictdid" style="display: none;" value="' +
           singlest[w] +
           '"><br><hr class="edprevtodhr">';
-        w = w + 3;
+        w = w + 4;
       }
     } else {
       document.getElementById("showedprotod").innerHTML =
