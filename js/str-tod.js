@@ -247,7 +247,7 @@ function rdreslt(e) {
       reslt[0].TODAddmin,
     );
     document.getElementById("avthumb").innerHTML =
-      '<img width="50px" src="' + prepostpre.AVPic + '" style="padding:4px;">';
+      '<img src="' + prepostpre.AVPic + '" style="padding:4px;">';
     document.getElementById("previewPostTitle").innerHTML = prepostpre.TODTitle;
     document.getElementById("preview").scrollTop = 0;
     $(".showsttod").attr("disabled", false);
