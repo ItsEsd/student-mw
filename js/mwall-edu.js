@@ -1205,7 +1205,7 @@ function enrollassignst(examid, epass, btn) {
   // Build URL
   var url1 = "https://script.google.com/macros/s/";
   var url2 =
-    "AKfycbwTJipEONSrXhEI3X0Mg-OkPoR8MR7rPooXOTSfnspXTijEdz9hP0gTVQPISy8cPAFr";
+    "AKfycbyjZr_GlLG5IEBabVp79cQHSwIDovEoZc5KHEBFI2vpI5cb2H14qkqkdPI-quXuIKtn";
   var url =
     url1 +
     url2 +
