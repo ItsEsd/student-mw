@@ -1039,10 +1039,22 @@ ul.icons li:last-child {
   border-radius: 10px;
 }
 #divcmntbx::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
+
+#divcmntbx::-webkit-scrollbar-track {
+  background: #ffffff63;
+  border: 3px solid #24242459;
+  border-radius: 10px;
+}
+
 #divcmntbx::-webkit-scrollbar-thumb {
-  background-color: #474747;
+  background: #24242459;
+  border-radius: 10px;
+}
+
+#divcmntbx::-webkit-scrollbar-thumb:hover {
+  background: #a7a8ae50;
 }
 #divcmntbx hr {
   border-color: #464646a6;
