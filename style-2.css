@@ -1032,7 +1032,7 @@ ul.icons li:last-child {
 #divcmntbx {
   width: 100%;
   background-color: #242424de;
-  height: 65vh;
+  max-height: 65vh;
   font-size: 14px;
   padding: 5px;
   overflow-y: auto;
