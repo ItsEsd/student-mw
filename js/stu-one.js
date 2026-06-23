@@ -397,10 +397,7 @@ function loadegames() {
   if (document.getElementById("egames") || document.getElementById("megame"))
     return;
   const egamesButton = document.createElement("div");
-  egamesButton.className = "btn btn-warning";
-  egamesButton.style.cssText =
-    "width:95%;margin-top:10px;margin-bottom:10px;max-width:225px;";
-
+  egamesButton.className = "egamesbtn";
   const egamesDiv = document.createElement("div");
   egamesDiv.id = "egames";
   egamesDiv.textContent = "E-Games 🎮";

@@ -249,7 +249,7 @@ function shoeprevexresult(label) {
                 "<br><i>Duration:</i> " +
                 json.records[i].TDuration +
                 "</p></div>" +
-                "<p style='font-size:20px;color:green;'>Correct Answer: " +
+                "<p style='font-size:18px;color:green;'>Correct Answer: " +
                 count +
                 "</p>";
             }

@@ -1035,7 +1035,7 @@ function getcalendar() {
   var flcaldate = tois.substring(0, 10);
   var calendar = new FullCalendar.Calendar(calendarEl, {
     aspectRatio: 1,
-    initialView: "listYear",
+    initialView: "dayGridMonth",
     headerToolbar: {
       center: "title",
       right: "dayGridYear,dayGridMonth,timeGridDay,timeGridWeek,listYear",
