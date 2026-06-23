@@ -299,10 +299,15 @@ h3 {
   padding: 10px;
   background-color: #ffffff;
 }
-.secselect,
-.sectodinput {
+.secselect {
   display: inline-block;
   width: 80% !important;
+  max-width: 400px;
+  margin: 6px;
+}
+.sectodinput {
+  display: inline-block;
+  width: 46% !important;
   max-width: 400px;
   margin: 6px;
 }
