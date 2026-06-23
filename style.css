@@ -302,7 +302,8 @@ h3 {
 .secselect,
 .sectodinput {
   display: inline-block;
-  width: 47% !important;
+  width: 80% !important;
+  max-width: 400px;
   margin: 6px;
 }
 #strtodstu .form-control {
@@ -454,6 +455,7 @@ h3 {
   max-width: 600px;
 }
 #searchbcon {
+  width: 95%;
   max-width: 800px;
 }
 #searchedu {
@@ -587,7 +589,8 @@ h3 {
 .serchpropic {
   float: left;
   width: 45px;
-  padding-right: 10px;
+  margin-right: 10px;
+  border-radius: 8px;
 }
 
 .autocomplete-items {
@@ -708,6 +711,7 @@ h3 {
   padding: 10px;
   max-width: 500px;
   box-shadow: 0px 2px 6px 0px #474749;
+  border-radius: 8px;
 }
 .edusrcprotitle {
   font-size: 20px;
