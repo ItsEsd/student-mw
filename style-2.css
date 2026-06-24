@@ -963,7 +963,7 @@ ul.icons li:last-child {
   color: #dbdada;
   padding: 2px 10px;
   cursor: pointer;
-  width: 100%;
+  width: 90%;
   max-width: 280px;
   text-align: right;
   border-bottom: 4px solid #e1b2074a;
@@ -1417,6 +1417,9 @@ ul.icons li:last-child {
 /* Media Screen */ /* Mobile */
 
 @media (max-width: 1024px) {
+  #lgoutacnt {
+    max-width: 90%;
+  }
   #avthumb img {
     width: 40px;
     height: 40px;
