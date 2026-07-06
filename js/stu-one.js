@@ -31,6 +31,7 @@ function inwallStu() {
     return false;
   }
 }
+let userClient = null;
 function ctrlqstuin(e) {
   var res = e.records;
   if (res != "ID not found!") {
@@ -54,6 +55,9 @@ function ctrlqstuin(e) {
       "&#8226; Email: " +
       res[0].Email +
       "</p></div>";
+
+    startStudentStream(res[0].STid);
+    userClient = res[0].FName + " " + res[0].LName;
     document.getElementById("recntavtr").innerHTML =
       '<img class="propicavtrbrd" src="' + res[0].ProfilePic + '" >';
     document.getElementById("avtrbrdname").innerHTML =

@@ -1,8 +1,8 @@
 function eduwaiting() {
   $("#myeduc-wait").empty();
-  document.getElementsByClassName("refreshlist")[0].disabled = true;
-  document.getElementsByClassName("refreshlist")[0].style.opacity = "0.5";
-  document.getElementsByClassName("refreshlist")[0].style.pointerEvents =
+  document.getElementsByClassName("refreshlist")[1].disabled = true;
+  document.getElementsByClassName("refreshlist")[1].style.opacity = "0.5";
+  document.getElementsByClassName("refreshlist")[1].style.pointerEvents =
     "none";
   document.getElementById("myeduc-wait").style.backgroundImage =
     "url('images/frameloader.gif')";
@@ -116,7 +116,7 @@ function srcedidwait(edidsrc) {
       var container = document.getElementById("myeduc-wait");
       container.style.backgroundImage = "none";
 
-      var refreshBtn = document.getElementsByClassName("refreshlist")[0];
+      var refreshBtn = document.getElementsByClassName("refreshlist")[1];
       if (refreshBtn) {
         refreshBtn.disabled = false;
         refreshBtn.style.opacity = "1";
@@ -169,9 +169,9 @@ function ctrlqrmvw() {
 }
 
 function eduapprv() {
-  document.getElementsByClassName("refreshlist")[1].disabled = true;
-  document.getElementsByClassName("refreshlist")[1].style.opacity = "0.5";
-  document.getElementsByClassName("refreshlist")[1].style.pointerEvents =
+  document.getElementsByClassName("refreshlist")[0].disabled = true;
+  document.getElementsByClassName("refreshlist")[0].style.opacity = "0.5";
+  document.getElementsByClassName("refreshlist")[0].style.pointerEvents =
     "none";
   $("#myeduc-appr").empty();
   document.getElementById("myeduc-appr").style.backgroundImage =
@@ -214,6 +214,7 @@ function gtedapprdlst(e) {
       var edidsrcap = singlestap[str].trim();
       if (edidsrcap) edidArrayAp.push(edidsrcap);
     }
+    console.log(edidArrayAp);
     srcedidapprv(edidArrayAp);
   } else {
     document.getElementById("myeduc-appr").innerHTML =
@@ -245,8 +246,14 @@ function gtedapprdlst(e) {
   }
 }
 
+var currentVisibleIds = [];
+var statusCheckInterval = null;
+
 function srcedidapprv(edidsrcap) {
   if (!Array.isArray(edidsrcap) || edidsrcap.length === 0) return;
+
+  // Store the active IDs so our interval loop can access them later
+  currentVisibleIds = edidsrcap;
 
   var ur1 = "https://script.google.com/macros/s/";
   var ur2 =
@@ -257,17 +264,25 @@ function srcedidapprv(edidsrcap) {
     "/exec?action=edsrclist&edidArray=" +
     encodeURIComponent(edidsrcap.join(","));
 
+  if (statusCheckInterval) clearInterval(statusCheckInterval);
+
   $.getJSON(
     "https://api.amrit-corp.com/_header/gate/mastrowall/?target_url=" +
       encodeURIComponent(url),
     function (json) {
       if (!json.records || json.records.length === 0) return;
+
       document.getElementById("myeduc-appr").innerHTML = "";
 
       json.records.forEach(function (record) {
         if (edidsrcap.includes(record.CardId)) {
           document.getElementById("myeduc-appr").innerHTML +=
             "<div onclick='showeduin(this);' class='edproclroomfin'>" +
+            "<div style='float: right; font-size: 12px;' id='badge-" +
+            record.CardId +
+            "'>" +
+            "<span class='status-badge' style='color: #95a5a6;'>Checking...</span>" +
+            "</div>" +
             "<span class='ednametitle'>" +
             record.FName +
             " " +
@@ -275,18 +290,18 @@ function srcedidapprv(edidsrcap) {
             "</span>" +
             "<img class='edpropic' src='" +
             record.ProfilePic +
-            "'><br> &#8226; " +
+            "'><br> • " +
             record.Subject +
-            " &#8226; " +
+            " • " +
             record.Class +
-            " &#8226; " +
+            " • " +
             record.Board +
-            "<br> &#8226; <a href='mailto:" +
+            "<br> • <a href='mailto:" +
             record.Email +
             "'>" +
             record.Email +
             "</a>" +
-            " &#8226; <a href='tel:" +
+            " • <a href='tel:" +
             record.CountryCode +
             record.PhoneNo +
             "'>+" +
@@ -301,14 +316,67 @@ function srcedidapprv(edidsrcap) {
       });
 
       document.getElementById("myeduc-appr").style.backgroundImage = "none";
-      var refreshBtn = document.getElementsByClassName("refreshlist")[1];
+      var refreshBtn = document.getElementsByClassName("refreshlist")[0];
       if (refreshBtn) {
         refreshBtn.disabled = false;
         refreshBtn.style.opacity = "1";
         refreshBtn.style.pointerEvents = "auto";
       }
+
+      updateLiveStatuses();
+
+      statusCheckInterval = setInterval(updateLiveStatuses, 5000);
     },
   );
+}
+
+function updateLiveStatuses() {
+  if (currentVisibleIds.length === 0) return;
+
+  var nodeServerUrl =
+    "https://sse-stat.amrit-corp.com/api/status?ids=" +
+    encodeURIComponent(currentVisibleIds.join(","));
+
+  $.getJSON(nodeServerUrl, function (statusData) {
+    currentVisibleIds.forEach(function (id) {
+      var badgeContainer = document.getElementById("badge-" + id);
+
+      if (badgeContainer) {
+        var isOnline = statusData[id] === "online";
+
+        badgeContainer.innerHTML = isOnline
+          ? "<span class='status-badge' style='color: #2ecc71; font-weight: bold;'>🟢 Online</span>"
+          : "<span class='status-badge' style='color: #95a5a6;'>🔴 Offline</span>";
+      }
+    });
+  }).fail(function () {
+    console.log("Failed to connect status server.");
+  });
+}
+
+function broadcastToEducator(eventMessage, eduIam, sender, action) {
+  var broadcastAbsoluteUrl =
+    "https://sse-stat.amrit-corp.com/api/event-broadcast/";
+  if (!Array.isArray(eduIam)) {
+    eduIam = [eduIam];
+  }
+  $.ajax({
+    url: broadcastAbsoluteUrl,
+    type: "POST",
+    contentType: "application/json",
+    data: JSON.stringify({
+      clientIds: eduIam, // Sends the array of visible IDs
+      message: eventMessage,
+      sender: sender,
+      action: action,
+    }),
+    success: function (response) {
+      console.log("Broadcast results:", response.summary);
+    },
+    error: function (xhr, status, error) {
+      console.error("Failed to execute educator broadcast:", error);
+    },
+  });
 }
 
 function showeduin(label) {
@@ -684,6 +752,7 @@ clsrmcmntfm.addEventListener("submit", (event) => {
   var primg = document.getElementById("ppicstu").src;
   var cmcon = encodeURIComponent(JSON.stringify($("#medcmmnt").val()));
   var edid = window.btoa($("#eduidst").val());
+  var stid = window.btoa(currentStudentId);
   var d = new Date();
   var months = [
     "January",
@@ -732,6 +801,8 @@ clsrmcmntfm.addEventListener("submit", (event) => {
       cmnd +
       "&cdid=" +
       edid +
+      "&stid=" +
+      stid +
       "&cttm=" +
       cTime +
       "&ccon=" +
@@ -775,32 +846,100 @@ function ctrlqcmnt(e) {
   var cmntlen = cmelm.length;
   var comlem = document.getElementById("divcmntbx");
   totlcmnt((cmntlen - 1) / 6);
-  var nmF = document.getElementById("mednam").innerText;
+
+  var eduid = $("#eduidst").val();
+  var stuid = window.btoa(currentStudentId);
   if (cmntlen > 6) {
+    broadcastToEducator(
+      "💬 Classroom Comments Updated",
+      eduid,
+      userClient,
+      "classroom_comment",
+    );
     $("#divcmntbx").empty();
-    for (var k = 0; k <= cmntlen - 1; k += 6) {
+    for (var k = 0; k < cmntlen; k += 6) {
+      var isOwner = cmelm[k + 1] === stuid;
+
       comlem.innerHTML +=
-        '<center><div class="edcmnt"><span class="delcmnted" onclick="deletecmnted(this)">Delete</span><input class="cmntidval" style="display:none;"value="' +
+        '<center><div class="edcmnt' +
+        (isOwner ? "" : " stcmnt") +
+        '">' +
+        (isOwner
+          ? '<span class="delcmnted cntdlt" onclick="deletecmnted(this)">Delete</span>'
+          : "") +
+        '<input class="cmntidval" style="display:none;" value="' +
         cmelm[k] +
-        '"><div class="cmntinfo"><p class="cmmntor"><span class="cmntrimg"><img src="' +
+        '">' +
+        '<div class="cmntinfo">' +
+        '<p class="cmmntor">' +
+        '<span class="cmntrimg"><img src="' +
         cmelm[k + 4] +
-        '"></span><span class="cmnttrnm">' +
+        '"></span>' +
+        '<span class="cmnttrnm">' +
         cmelm[k + 3] +
-        '</span></p><p class="cmnttim">' +
+        "</span>" +
+        "</p>" +
+        '<p class="cmnttim">' +
         cmelm[k + 2] +
-        "</p></div>" +
+        "</p>" +
+        "</div>" +
         '<div class="cmntcon">' +
         JSON.parse(cmelm[k + 5]) +
         "</div>" +
-        "</div><hr><center>";
-      if (cmelm[k + 3] == nmF) {
-        document
-          .getElementsByClassName("edcmnt")
-          [k / 6].classList.add("stcmnt");
-      }
-      document
-        .getElementsByClassName("delcmnted")
-        [k / 6].classList.add("cntdlt");
+        "</div><hr></center>";
+    }
+  } else {
+    comlem.innerHTML =
+      '<center><div class="nocmntedc"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">' +
+      '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>' +
+      '<path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/></svg>' +
+      "<br><h5>Empty</h5></div></center>";
+  }
+}
+
+function ctrlqcmntrfsh(e) {
+  document.getElementById("rfrshcmtsv").style.animation = "none";
+  $("#rfshcmntbx").prop("disabled", false);
+  $("#rfshcmntbx").css("pointer-events", "auto").css("opacity", "1");
+  var cmelm = e.result.split("{-/},");
+  var cmntlen = cmelm.length;
+  var comlem = document.getElementById("divcmntbx");
+  totlcmnt((cmntlen - 1) / 6);
+
+  var eduid = $("#eduidst").val();
+  var stuid = window.btoa(currentStudentId);
+  if (cmntlen > 6) {
+    $("#divcmntbx").empty();
+    for (var k = 0; k < cmntlen; k += 6) {
+      var isOwner = cmelm[k + 1] === stuid;
+
+      comlem.innerHTML +=
+        '<center><div class="edcmnt' +
+        (isOwner ? "" : " stcmnt") +
+        '">' +
+        (isOwner
+          ? '<span class="delcmnted cntdlt" onclick="deletecmnted(this)">Delete</span>'
+          : "") +
+        '<input class="cmntidval" style="display:none;" value="' +
+        cmelm[k] +
+        '">' +
+        '<div class="cmntinfo">' +
+        '<p class="cmmntor">' +
+        '<span class="cmntrimg"><img src="' +
+        cmelm[k + 4] +
+        '"></span>' +
+        '<span class="cmnttrnm">' +
+        cmelm[k + 3] +
+        "</span>" +
+        "</p>" +
+        '<p class="cmnttim">' +
+        cmelm[k + 2] +
+        "</p>" +
+        "</div>" +
+        '<div class="cmntcon">' +
+        JSON.parse(cmelm[k + 5]) +
+        "</div>" +
+        "</div><hr></center>";
     }
   } else {
     comlem.innerHTML =
@@ -812,26 +951,28 @@ function ctrlqcmnt(e) {
 }
 
 function deletecmnted(label) {
-  var list = document.getElementsByClassName("delcmnted");
-  list = [].slice.call(list);
-  var posof = list.indexOf(label);
-  var x = document.getElementsByClassName("cmntidval");
-  document.getElementsByClassName("edcmnt")[posof].classList.add("loading");
-  var cmid = x[posof].value;
+  var comment = label.closest(".edcmnt");
+  comment.classList.add("loading");
+
+  var cmid = comment.querySelector(".cmntidval").value;
   var edid = window.btoa($("#eduidst").val());
+
   var ur1 = "https://script.google.com/macros/s/";
   var ur2 =
     "AKfycbz0Okd0T9pMS-Q4nLUstxONTlswNXbKu4qUud4tfge6_ToM0uQZQxda5SrpcRPNUsCKrA";
+
   var url =
     ur1 +
     ur2 +
     "/exec" +
-    "?callback=ctrlqcmnt&cmid=" +
-    cmid +
+    "?callback=ctrlqcmnt" +
+    "&cmid=" +
+    encodeURIComponent(cmid) +
     "&cdid=" +
-    edid +
+    encodeURIComponent(edid) +
     "&action=dcmnt";
-  var request = $.ajax({
+
+  $.ajax({
     crossDomain: true,
     url: url,
     method: "GET",
@@ -848,7 +989,12 @@ function rfshcmnt() {
   var ur2 =
     "AKfycbz0Okd0T9pMS-Q4nLUstxONTlswNXbKu4qUud4tfge6_ToM0uQZQxda5SrpcRPNUsCKrA";
   var url =
-    ur1 + ur2 + "/exec" + "?callback=ctrlqcmnt&cdid=" + edid + "&action=rcmnt";
+    ur1 +
+    ur2 +
+    "/exec" +
+    "?callback=ctrlqcmntrfsh&cdid=" +
+    edid +
+    "&action=rcmnt";
   var request = $.ajax({
     crossDomain: true,
     url: url,

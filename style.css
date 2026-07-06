@@ -1,6 +1,12 @@
 /* M A S T R O W A L L */
 * {
   scroll-behavior: smooth;
+  outline: none;
+}
+button,
+button:active,
+button:focus {
+  outline: none;
 }
 body {
   overflow-x: hidden;
@@ -242,6 +248,7 @@ label {
   padding: 10px;
   padding-top: 5vh;
   padding-bottom: 1px;
+  position: relative;
   /* box-shadow: 0px 1px 10px 0px #414141; */
 }
 .propic {
@@ -1227,4 +1234,219 @@ h3 {
 #clsrmcal:hover,
 #sketchdrw:hover {
   opacity: 0.8;
+}
+
+/* --- Floating Action Badge Base Classes --- */
+#notification-badge-btn {
+  margin-left: 10px;
+  background: #cb6811;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#notification-badge-btn:focus {
+  outline: none;
+}
+
+#notification-count {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  background: #e74c3c;
+  color: white;
+  border-radius: 12px;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: bold;
+  font-family: sans-serif;
+  display: none;
+}
+
+/* --- Mobile Positioning Variations --- */
+#notification-badge-btn.inmobile {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+#notification-badge-btn.outmobile {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  z-index: 100;
+}
+
+/* --- Animation System Rules --- */
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+/* --- Dynamic Notification Modal Layout Engine --- */
+/* --- Inner Structure Modules --- */
+#notification-modal .modal-header {
+  background-image: linear-gradient(45deg, #b0823a, rgb(63, 63, 63));
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#notification-modal .modal-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: bold;
+  background: transparent;
+}
+
+#notification-modal .modal-close-btn {
+  outline: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+#notification-modal .modal-controls {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  background: #fafafa;
+}
+
+#notification-modal #stream-toggle-btn {
+  outline: none;
+  padding: 6px 14px;
+  background: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 12px;
+  transition: 0.2s;
+}
+
+#notification-modal .clear-btn {
+  outline: none;
+  padding: 6px 12px;
+  background: #626262;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+#modal-notification-list {
+  max-height: 45vh;
+  overflow-y: auto;
+  padding: 10px;
+  background: #fff;
+}
+
+/* ==========================================
+   1. GLOBAL MODAL CONTAINER BASE STYLES
+   ========================================== */
+#notification-modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  background: #fff;
+  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.15);
+  z-index: 100000;
+  overflow: hidden;
+  font-family: sans-serif;
+  transition: opacity 0.2s ease;
+}
+
+/* Base trigger utility class */
+#notification-modal.active {
+  display: block !important;
+}
+
+/* ==========================================
+   2. DESKTOP VIEW LOUVER (Greater than 1024px)
+   ========================================== */
+@media screen and (min-width: 1025px) {
+  #notification-modal {
+    bottom: 5px; /* Sits cleanly below your top-right badge button */
+    right: 3px;
+    width: 30.5%;
+    max-height: 60vh;
+    border-radius: 8px;
+    border: 1px solid #e1e8ed;
+  }
+  #modal-notification-list {
+    max-height: 45vh;
+  }
+  /* Smooth subtle fade-in scale animation for desktop popups */
+  #notification-modal.active {
+    animation: desktopPop 0.25s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+  }
+}
+
+@keyframes desktopPop {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================
+   3. TABLET & MOBILE VIEW LOUVER (Max 1024px)
+   ========================================== */
+@media screen and (max-width: 1024px) {
+  #notification-modal {
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 100%); /* Start hidden off-screen bottom */
+    width: 100%;
+    max-width: 600px; /* Limits size on widescreen landscape tablets */
+    max-height: 70vh; /* Prevents viewport overflow on shorter screens */
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+  }
+  #modal-notification-list {
+    max-height: 52vh;
+  }
+
+  /* Upward sliding animation behavior for mobile sheets */
+  #notification-modal.active {
+    animation: mobileSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@keyframes mobileSlideUp {
+  from {
+    transform: translate(-50%, 100%);
+  }
+  to {
+    transform: translate(-50%, 0);
+  }
 }
