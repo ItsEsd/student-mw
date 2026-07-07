@@ -82,6 +82,15 @@ function saveAndNotify(senderName, messageText, action) {
   if (action === "classroom_comment" && edid != "") {
     rfshcmnt();
   }
+
+  if (action === "student_approved" || action === "student_removed") {
+    eduapprv();
+    eduwaiting();
+  }
+
+  if (action === "student_wait_removed") {
+    eduwaiting();
+  }
 }
 
 function createNotificationUI() {
@@ -106,7 +115,7 @@ function createNotificationUI() {
     </div>
     <div class="modal-controls">
       <button id="stream-toggle-btn" onclick="startStudentStream()">Start Stream</button>
-      <button onclick="clearAllNotifications()" class="clear-btn">Clear Logs</button>
+      <button onclick="clearAllNotifications()" class="clear-btn"><svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#f1f1f1"><path d="M624-288v-72h144v72H624Zm0-264v-72h240v72H624Zm0 132v-72h192v72H624ZM144-624H96v-72h168v-72h144v72h168v72h-48v360q0 29.7-21.15 50.85Q485.7-192 456-192H216q-29.7 0-50.85-21.15Q144-234.3 144-264v-360Zm72 0v360h240v-360H216Zm0 0v360-360Z"/></svg> Clear Logs</button>
     </div>
     <div id="modal-notification-list"></div>
   `;

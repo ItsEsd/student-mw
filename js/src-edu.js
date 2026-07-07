@@ -150,7 +150,7 @@ $(document).ready(function () {
     });
   });
 });
-
+let newEDreqst = null;
 function addeducator(label) {
   var list = document.getElementsByClassName("addedbtn");
   var listaped = document.getElementsByClassName("eduprewid");
@@ -200,6 +200,7 @@ function addeducator(label) {
       method: "GET",
       dataType: "jsonp",
     });
+    newEDreqst = addeduid;
   } else {
     list[posofinput].style.backgroundColor = "#e74141 !important";
     list[posofinput].innerHTML = "In Classroom/ Waiting";
@@ -234,6 +235,12 @@ function ctrlqaddst() {
   });
 }
 function ctrlqadded() {
+  broadcastToEducator(
+    "🆕 Student Request",
+    newEDreqst,
+    userClient,
+    "student_request",
+  );
   var p = $("#posof").val();
   var z = document.getElementsByClassName("addedbtn");
   z[p].innerHTML = "Waiting Approval";

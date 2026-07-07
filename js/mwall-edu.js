@@ -888,6 +888,10 @@ function ctrlqcmnt(e) {
         "</div>" +
         "</div><hr></center>";
     }
+    const div = document.getElementById("divcmntbx");
+    if (div) {
+      div.scrollTop = div.scrollHeight;
+    }
   } else {
     comlem.innerHTML =
       '<center><div class="nocmntedc"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">' +
@@ -940,6 +944,10 @@ function ctrlqcmntrfsh(e) {
         JSON.parse(cmelm[k + 5]) +
         "</div>" +
         "</div><hr></center>";
+    }
+    const div = document.getElementById("divcmntbx");
+    if (div) {
+      div.scrollTop = div.scrollHeight;
     }
   } else {
     comlem.innerHTML =

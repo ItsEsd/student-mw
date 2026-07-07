@@ -1358,6 +1358,10 @@ h3 {
   border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
 }
 
 #modal-notification-list {
