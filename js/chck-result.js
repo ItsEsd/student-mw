@@ -1,10 +1,19 @@
 chresult.addEventListener("submit", (event) => {
   var exid = $("#checkexamid").val();
   var enid = JSON.stringify($("#chechenid").val());
+  var enps = JSON.stringify($("#checkexamps").val());
   var url1 = "https://script.google.com/macros/s/";
   var url2 =
     "AKfycbyjZr_GlLG5IEBabVp79cQHSwIDovEoZc5KHEBFI2vpI5cb2H14qkqkdPI-quXuIKtn";
-  var url = url1 + url2 + "/exec" + "?action=gentestrd";
+  var url =
+    url1 +
+    url2 +
+    "/exec" +
+    "?exmid=" +
+    encodeURIComponent(exid) +
+    "&exmps=" +
+    encodeURIComponent(enps) +
+    "&action=gentestrd";
   document.getElementById("falsebacktwo").style.display = "block";
   var exmprevstr = document.getElementsByClassName("exmiddsh");
   var nsvexm = 0;
@@ -24,58 +33,57 @@ chresult.addEventListener("submit", (event) => {
     "https://api.amrit-corp.com/_header/gate/mastrowall/?target_url=" +
       encodeURIComponent(url),
     function (json) {
-      for (var i = 0; i < json.records.length - 1; i++) {
-        if (exid === json.records[i].ExamID) {
-          var stustring = JSON.parse(
-            JSON.stringify(json.records[i].EnrolledStuFinal),
-          );
-          var sstring = stustring.split(",");
-          var lenstrk = sstring.length;
-          var restr = JSON.parse(JSON.stringify(json.records[i].StuAnsFinal));
-          var sprestr = restr.split("{anst},");
-          var lenstr = sprestr.length;
-          var ansk = JSON.parse(JSON.stringify(json.records[i].AnsSTfinal));
-          var anskey = ansk.split('{qfin}",');
-          var lenstrkey = anskey.length;
-          for (var k = 0; k < lenstr; k += 2) {
-            if (enid == sprestr[k]) {
-              var res = sprestr[k + 1];
-              var resone = JSON.parse(res);
-              var count = 0;
-              for (var j = 0; j < lenstrkey - 1; j++) {
-                if (resone.qnst[j] === anskey[j].substring(1)) {
-                  count = count + 1;
-                } else {
-                  count = count;
-                }
+      if (json.records && json.records.length > 0) {
+        var i = 0;
+        var stustring = JSON.parse(
+          JSON.stringify(json.records[i].EnrolledStuFinal),
+        );
+        var sstring = stustring.split(",");
+        var lenstrk = sstring.length;
+        var restr = JSON.parse(JSON.stringify(json.records[i].StuAnsFinal));
+        var sprestr = restr.split("{anst},");
+        var lenstr = sprestr.length;
+        var ansk = JSON.parse(JSON.stringify(json.records[i].AnsSTfinal));
+        var anskey = ansk.split('{qfin}",');
+        var lenstrkey = anskey.length;
+        for (var k = 0; k < lenstr; k += 2) {
+          if (enid == sprestr[k]) {
+            var res = sprestr[k + 1];
+            var resone = JSON.parse(res);
+            var count = 0;
+            for (var j = 0; j < lenstrkey - 1; j++) {
+              if (resone.qnst[j] === anskey[j].substring(1)) {
+                count = count + 1;
+              } else {
+                count = count;
               }
-              document.getElementById("extakepost").style.display = "none";
-              document.getElementById("extakepre").style.display = "none";
-              document.getElementById("scrbrd").style.display = "block";
-              document.getElementById("crtans").style.display = "block";
-              document.getElementById("crtans").innerHTML =
-                "<div><p style='text-align:left;'><i>Educator:</i> " +
-                json.records[i].EducatorName +
-                "<br><i>Exam Title:</i> " +
-                json.records[i].ExamTitle +
-                "<br><i>Description:</i> " +
-                json.records[i].ExamDescp +
-                "<br><i>Duration:</i> " +
-                json.records[i].TDuration +
-                "</p></div>" +
-                "<p style='font-size:20px;color:green;'>Correct Answer: " +
-                count +
-                "</p>";
             }
+            document.getElementById("extakepost").style.display = "none";
+            document.getElementById("extakepre").style.display = "none";
+            document.getElementById("scrbrd").style.display = "block";
+            document.getElementById("crtans").style.display = "block";
+            document.getElementById("crtans").innerHTML =
+              "<div><p style='text-align:left;'><i>Educator:</i> " +
+              json.records[i].EducatorName +
+              "<br><i>Exam Title:</i> " +
+              json.records[i].ExamTitle +
+              "<br><i>Description:</i> " +
+              json.records[i].ExamDescp +
+              "<br><i>Duration:</i> " +
+              json.records[i].TDuration +
+              "</p></div>" +
+              "<p style='font-size:20px;color:green;'>Correct Answer: " +
+              count +
+              "</p>";
           }
-          for (var h = 0; h < lenstrk; h++) {
-            if (enid == sstring[h]) {
-              document.getElementById("stunamek").style.display = "block";
-              document.getElementById("stunamek").innerHTML =
-                "<p style='color:black;font-size:20px;'>Name: <span style='color:blue;font-style:italic;'>" +
-                JSON.parse(sstring[h - 2]) +
-                "</span></p>";
-            }
+        }
+        for (var h = 0; h < lenstrk; h++) {
+          if (enid == sstring[h]) {
+            document.getElementById("stunamek").style.display = "block";
+            document.getElementById("stunamek").innerHTML =
+              "<p style='color:black;font-size:20px;'>Name: <span style='color:blue;font-style:italic;'>" +
+              JSON.parse(sstring[h - 2]) +
+              "</span></p>";
           }
         }
       }
@@ -91,9 +99,10 @@ function saveexaminfo() {
   $("#falsebacktwo").slideDown("fast");
   var stemid = $("#email").val();
   var examidst = $("#checkexamid").val();
+  var examidps = $("#checkexamps").val();
   var enridst1 = $("#chechenid").val();
   var examdtls = document.getElementById("crtans").innerHTML;
-  var enridst = enridst1 + "{ex}," + examdtls + "{ex}";
+  var enridst = examidps + "{ex}," + enridst1 + "{ex}," + examdtls + "{ex}";
   var ur1 = "https://script.google.com/macros/s/";
   var ur2 =
     "AKfycby7jTn-KV6hWBF6cANbWbatwFXimHJ_5RzwGSOkQU4WkamYCIZGOdLACix8qLEJ4N85JQ";
@@ -173,15 +182,18 @@ function gtallemxms(e) {
             '<p style="font-size:14px;"><span style="float:left;" class="exmiddsh">Exam ID: <span class="emxidsvdbrd">' +
             singlessvexm[st] +
             '</span></span><br><span style="float:left;">Enrollment ID: ' +
-            singlessvexm[st + 1] +
-            '</span></p><div class="exdtlsst">' +
             singlessvexm[st + 2] +
+            '</span></p><div class="exdtlsst">' +
+            singlessvexm[st + 3] +
             "</div>" +
             '<input class="exidsv" style="display:none;" value="' +
             singlessvexm[st] +
             '">' +
-            '<input class="enidsv" value="' +
+            '<input class="enidps" value="' +
             singlessvexm[st + 1] +
+            '" style="display:none;">' +
+            '<input class="enidsv" value="' +
+            singlessvexm[st + 2] +
             '" style="display:none;"><hr>',
         );
         srno++;
@@ -199,69 +211,78 @@ function shoeprevexresult(label) {
 
   var x = document.getElementsByClassName("exidsv");
   var y = document.getElementsByClassName("enidsv");
+  var z = document.getElementsByClassName("enidps");
   var examid = x[posofinput].value;
   var enrid = JSON.stringify(y[posofinput].value);
+  var enrps = JSON.stringify(z[posofinput].value);
   var url1 = "https://script.google.com/macros/s/";
   var url2 =
     "AKfycbyjZr_GlLG5IEBabVp79cQHSwIDovEoZc5KHEBFI2vpI5cb2H14qkqkdPI-quXuIKtn";
-  var url = url1 + url2 + "/exec" + "?action=gentestrd";
+  var url =
+    url1 +
+    url2 +
+    "/exec" +
+    "?exmid=" +
+    encodeURIComponent(exid) +
+    "&exmps=" +
+    encodeURIComponent(enrps) +
+    "&action=gentestrd";
   document.getElementById("falsebacktwo").style.display = "block";
   $.getJSON(
     "https://api.amrit-corp.com/_header/gate/mastrowall/?target_url=" +
       encodeURIComponent(url),
     function (json) {
-      for (var i = 0; i < json.records.length - 1; i++) {
-        if (examid === json.records[i].ExamID) {
-          var stustring = JSON.parse(
-            JSON.stringify(json.records[i].EnrolledStuFinal),
-          );
-          var sstring = stustring.split(",");
-          var lenstrk = sstring.length;
-          var restr = JSON.parse(JSON.stringify(json.records[i].StuAnsFinal));
-          var sprestr = restr.split("{anst},");
-          var lenstr = sprestr.length;
-          var ansk = JSON.parse(JSON.stringify(json.records[i].AnsSTfinal));
-          var anskey = ansk.split('{qfin}",');
-          var lenstrkey = anskey.length;
-          for (var k = 0; k < lenstr; k += 2) {
-            if (enrid == sprestr[k]) {
-              var res = sprestr[k + 1];
-              var resone = JSON.parse(res);
-              var count = 0;
-              for (var j = 0; j < lenstrkey - 1; j++) {
-                if (resone.qnst[j] === anskey[j].substring(1)) {
-                  count = count + 1;
-                } else {
-                  count = count;
-                }
+      if (json.records && json.records.length > 0) {
+        var i = 0;
+        var stustring = JSON.parse(
+          JSON.stringify(json.records[i].EnrolledStuFinal),
+        );
+        var sstring = stustring.split(",");
+        var lenstrk = sstring.length;
+        var restr = JSON.parse(JSON.stringify(json.records[i].StuAnsFinal));
+        var sprestr = restr.split("{anst},");
+        var lenstr = sprestr.length;
+        var ansk = JSON.parse(JSON.stringify(json.records[i].AnsSTfinal));
+        var anskey = ansk.split('{qfin}",');
+        var lenstrkey = anskey.length;
+        for (var k = 0; k < lenstr; k += 2) {
+          if (enrid == sprestr[k]) {
+            var res = sprestr[k + 1];
+            var resone = JSON.parse(res);
+            var count = 0;
+            for (var j = 0; j < lenstrkey - 1; j++) {
+              if (resone.qnst[j] === anskey[j].substring(1)) {
+                count = count + 1;
+              } else {
+                count = count;
               }
-              document.getElementById("extakepost").style.display = "none";
-              document.getElementById("extakepre").style.display = "none";
-              document.getElementById("scrbrd").style.display = "block";
-              document.getElementById("crtans").style.display = "block";
-              document.getElementById("crtans").innerHTML =
-                "<div><p style='text-align:left;'><i>Educator:</i> " +
-                json.records[i].EducatorName +
-                "<br><i>Exam Title:</i> " +
-                json.records[i].ExamTitle +
-                "<br><i>Description:</i> " +
-                json.records[i].ExamDescp +
-                "<br><i>Duration:</i> " +
-                json.records[i].TDuration +
-                "</p></div>" +
-                "<p style='font-size:18px;color:green;'>Correct Answer: " +
-                count +
-                "</p>";
             }
+            document.getElementById("extakepost").style.display = "none";
+            document.getElementById("extakepre").style.display = "none";
+            document.getElementById("scrbrd").style.display = "block";
+            document.getElementById("crtans").style.display = "block";
+            document.getElementById("crtans").innerHTML =
+              "<div><p style='text-align:left;'><i>Educator:</i> " +
+              json.records[i].EducatorName +
+              "<br><i>Exam Title:</i> " +
+              json.records[i].ExamTitle +
+              "<br><i>Description:</i> " +
+              json.records[i].ExamDescp +
+              "<br><i>Duration:</i> " +
+              json.records[i].TDuration +
+              "</p></div>" +
+              "<p style='font-size:18px;color:green;'>Correct Answer: " +
+              count +
+              "</p>";
           }
-          for (var h = 0; h < lenstrk; h++) {
-            if (enrid == sstring[h]) {
-              document.getElementById("stunamek").style.display = "block";
-              document.getElementById("stunamek").innerHTML =
-                "<p style='color:black;font-size:20px;'>Name: <span style='color:blue;font-style:italic;'>" +
-                JSON.parse(sstring[h - 2]) +
-                "</span></p>";
-            }
+        }
+        for (var h = 0; h < lenstrk; h++) {
+          if (enrid == sstring[h]) {
+            document.getElementById("stunamek").style.display = "block";
+            document.getElementById("stunamek").innerHTML =
+              "<p style='color:black;font-size:20px;'>Name: <span style='color:blue;font-style:italic;'>" +
+              JSON.parse(sstring[h - 2]) +
+              "</span></p>";
           }
         }
       }

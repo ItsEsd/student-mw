@@ -1535,7 +1535,7 @@ function showEnrolledExams(data) {
         </button>
 
         <button class="chekex-btn" 
-         onclick="checkresltst('${exam.a}', '${enrollId}')" 
+         onclick="checkresltst('${exam.a}','${JSON.parse(exam.p)}', '${enrollId}')" 
           ${exam.s === "NA" ? "disabled" : ""}>
           Check Result
         </button>
@@ -1583,9 +1583,10 @@ function goToTest(examId, enrollId, pass) {
   );
 }
 
-function checkresltst(exmid, enrid) {
+function checkresltst(exmid, exps, enrid) {
   $(".exmenrlddv").hide();
   document.getElementById("checkexamid").value = exmid;
+  document.getElementById("checkexamps").value = exps;
   document.getElementById("chechenid").value = enrid;
   $(".experformsubmit").click();
 }
