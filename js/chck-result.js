@@ -168,7 +168,7 @@ function gtallemxms(e) {
       var singlessvexm = allExamData.split("{ex},");
       var srno = 1;
 
-      for (var st = 0; st < singlessvexm.length - 1; st += 3) {
+      for (var st = 0; st < singlessvexm.length - 1; st += 4) {
         $("#extakepost").append(
           '<div align="left" class="savevexmdiv">' +
             '<div style="text-align:left">' +
