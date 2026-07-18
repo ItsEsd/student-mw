@@ -223,7 +223,7 @@ function shoeprevexresult(label) {
     url2 +
     "/exec" +
     "?exmid=" +
-    encodeURIComponent(exid) +
+    encodeURIComponent(examid) +
     "&exmps=" +
     encodeURIComponent(enrps) +
     "&action=gentestrd";
